@@ -12,14 +12,15 @@ def login(request):
         password = request.POST.get('password')
         print(user_name)
         userdata = Auts.objects.filter(user_name= user_name).values()
-        print(userdata)
+        # print(userdata)
         print(len(userdata))
         for data in userdata:
             if data['password'] == password:
                 if data['catagory'] == 'investor' :
-                    # url = "/investor/home/?user_id={}".format(userdata.id)
-                    # return HttpResponseRedirect(url)
-                    return HttpResponse("Investor")
+                    userid = int(data['id'])
+                    url = "/investor/home/{}".format(userid)
+                    return HttpResponseRedirect(url)
+                    # return HttpResponse("Investor")
                 elif data['catagory'] == 'startup':
                     # url = "/startup/home/?user_id={}".format(userdata.id)
                     # return HttpResponseRedirect(url)
