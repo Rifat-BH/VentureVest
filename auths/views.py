@@ -18,7 +18,7 @@ def login(request):
             if data['password'] == password:
                 if data['catagory'] == 'investor' :
                     userid = int(data['id'])
-                    url = "/investor/home/{}".format(userid)
+                    url = "/investor/home/?id={}".format(userid)
                     return HttpResponseRedirect(url)
                     # return HttpResponse("Investor")
                 elif data['catagory'] == 'startup':
@@ -26,7 +26,7 @@ def login(request):
                     # return HttpResponseRedirect(url)
                     return HttpResponse("Startup")
             else:
-                return HttpResponse("/login/")
+                return HttpResponseRedirect("/login/")
 
     return render(request, "login.html")
 
