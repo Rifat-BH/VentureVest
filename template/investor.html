@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block contant %}
+<div class="container">
+    <p>{{uid}}</p>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card shadow-lg p-3 mb-5 bg-body rounded text-center" style="width: 22rem; border-bottom: 5px solid rgba(255, 0, 0, 0.514);">
+                <div class="card-body">
+                  <h5 class="card-title">Total Invested Amount</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+              </div>
+        </div>
+        <div class="col">
+            <div class="card shadow-lg p-3 mb-5 bg-body rounded text-center" style="width: 22rem;">
+                <div class="card-body">
+                  <h5 class="card-title">Number of Investments</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+
+                </div>
+              </div>
+        </div>
+        <div class="col">
+            <div class="card shadow-lg p-3 mb-5 bg-body rounded text-center" style="width: 22rem;">
+                <div class="card-body">
+                  <h5 class="card-title">Average Rate of Return</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+              </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

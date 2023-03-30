@@ -8,4 +8,4 @@ def home(request):
     if request.method == 'GET':
         i_id = request.GET.get('id')
 
-    return HttpResponse(i_id)
+    return render(request,"investor.html", {'uid' : i_id})
