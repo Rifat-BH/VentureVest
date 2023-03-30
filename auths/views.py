@@ -25,6 +25,10 @@ def login(request):
                     # url = "/startup/home/?user_id={}".format(userdata.id)
                     # return HttpResponseRedirect(url)
                     return HttpResponse("Startup")
+                elif data['catagory'] == 'admin':
+                    # url = "/admin/home/?user_id={}".format(userdata.id)
+                    # return HttpResponseRedirect(url)
+                    return HttpResponse("Startup")
             else:
                 return HttpResponseRedirect("/login/")
 
@@ -57,3 +61,5 @@ def signup(request):
         
 
     return render(request, "signup.html")
+def logout(request):
+    pass
