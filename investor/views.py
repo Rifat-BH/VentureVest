@@ -5,7 +5,11 @@ from auths.models import Auts
 def home(request):
     # profile = Auts.objects.filter(id = investor_id).values()
     # print(profile)
+    
     if request.method == 'GET':
         i_id = request.GET.get('id')
-
-    return render(request,"investor.html", {'uid' : i_id})
+        user_des = Auts.objects.get(id=i_id)
+    data={
+        'name' : user_des,
+    }
+    return render(request,"investor.html", data)

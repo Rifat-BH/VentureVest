@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <title>{% block title %}{% endblock %}</title>
+    <script src="https://kit.fontawesome.com/6b490fc12e.js" crossorigin="anonymous"></script>
+    {% block graph %} {% endblock %}
     <style>
       .nav-link{
         color: white;
@@ -16,7 +18,7 @@
         border-radius: 1px solid white;
       }
       body{
-        background-color: rgba(241, 241, 241, 0.918);
+        background-color: rgba(231, 231, 229, 0.425);
       }
 
     </style>
@@ -63,7 +65,25 @@
 
 {% endblock %}
 
-<footer>
+<footer class="text-center text-white" style="background-color: #0a4275;">
+
+  <div class="container p-4 pb-0">
+
+    <section class="">
+      <p class="d-flex justify-content-center align-items-center">
+        <span class="me-3">Register for free</span>
+        <button type="button" class="btn btn-rounded" style="border: 1px solid white;">
+          <a href="{% url 'signup' %}" style="color:white; text-decoration: none;">Sign Up!</a>
+        </button>
+      </p>
+    </section>
+
+  </div>
+
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    © 2023 Copyright: All Rights Reserve By Venture-Vest.com <br>
+    <a class="text-white" href="#">www.venturevest.com</a>
+  </div>
 
 </footer>
 
