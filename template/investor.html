@@ -7,8 +7,8 @@
   google.charts.setOnLoadCallback(drawChart);
 
   function drawChart() {
-
-    setInterval(function(){
+    var u_id = $("#userID").val();
+    // setInterval(function(){
       $.ajax({
         type : 'GET',
         url : "get_graph1data/?id="+u_id,
@@ -16,30 +16,47 @@
           var data_arr = [
                           ['Month', 'Total'],
                         ];
+          for(var i in response.g_data){
+              data_arr.push([(response.g_data[i].month), (response.g_data[i].total)])
+          }
+          console.log(data_arr);
+          var data = google.visualization.arrayToDataTable(data_arr);
+          var options = {
+            chart: {
+              title: 'Company Performance',
+              subtitle: 'Sales',
+            },
+            bars: 'vertical', // Required for Material Bar Charts.
+            colors: ['#0e3253']
+          };
 
+        var chart = new google.charts.Bar(document.getElementById('barchart_material'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
         },
       });
-    },1000);
-    var data = google.visualization.arrayToDataTable([
-      ['Year', 'Sales'],
-      ['2014', 1000],
-      ['2015', 1170],
-      ['2016', 660,],
-      ['2017', 1030]
-    ]);
+    // },300000);
 
-    var options = {
-      chart: {
-        title: 'Company Performance',
-        subtitle: 'Sales, Expenses, and Profit: 2014-2017',
-      },
-      bars: 'vertical', // Required for Material Bar Charts.
-      colors: ['#0e3253']
-    };
+    // var data = google.visualization.arrayToDataTable([
+    //   ['Year', 'Sales'],
+    //   ['2014', 1000],
+    //   ['2015', 1170],
+    //   ['2016', 660,],
+    //   ['2017', 1030]
+    // ]);
 
-    var chart = new google.charts.Bar(document.getElementById('barchart_material'));
+    // var options = {
+    //   chart: {
+    //     title: 'Company Performance',
+    //     subtitle: 'Sales',
+    //   },
+    //   bars: 'vertical', // Required for Material Bar Charts.
+    //   colors: ['#0e3253']
+    // };
 
-    chart.draw(data, google.charts.Bar.convertOptions(options));
+    // var chart = new google.charts.Bar(document.getElementById('barchart_material'));
+
+    // chart.draw(data, google.charts.Bar.convertOptions(options));
   }
 
 </script>
@@ -102,6 +119,7 @@
   <hr>
 </div>
 <!-- top 3 col -->
+{% for res in inv_data %}
 <div class="container">
   <div class="row m-auto">
 
@@ -120,7 +138,7 @@
           <h5 class="card-title">
             Total Invested Amount
           </h5>
-          <h3 class="card-subtitle mb-2 text-muted">150000</h3>
+          <h3 class="card-subtitle mb-2 text-muted">{{res.total_am}}</h3>
 
         </div>
       </div>
@@ -141,7 +159,7 @@
           <h5 class="card-title">
             Total Number of Investment
           </h5>
-          <h3 class="card-subtitle mb-2 text-muted">13</h3>
+          <h3 class="card-subtitle mb-2 text-muted">{{res.co}}</h3>
 
         </div>
       </div>
@@ -162,7 +180,7 @@
           <h5 class="card-title">
             Average Rate of Return
           </h5>
-          <h3 class="card-subtitle mb-2 text-muted">15%</h3>
+          <h3 class="card-subtitle mb-2 text-muted">{{res.avg_ret}}%</h3>
 
         </div>
       </div>
@@ -170,6 +188,7 @@
 
   </div>
 </div>
+{% endfor %}
 
 <div class="container">
   <div class="row">
@@ -210,10 +229,7 @@
       <label for="">
         <h4>Select Company</h4>
       </label>
-      <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
+      <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="comlist">
       </select>
     </form>
   </div>
@@ -239,12 +255,15 @@
         success : function(response){
           // console.log(response)
           $("#tbody").empty();
+          $("#comlist").empty();
           for(var i in response.t_data){
-            let x = response.t_data[i].date;
-            let arr = x.split("-")
-            console.log(arr[1]) ;
+            // let x = response.t_data[i].date;
+            // let arr = x.split("-")
+            // console.log(arr[1]) ;
             var temp = "<tr> <td>"+response.t_data[i].date+"</td> <td>"+response.t_data[i].company_name+"</td> <td>"+response.t_data[i].invest_ammount+"</td> <td>"+response.t_data[i].returen_rate+"%</td> </tr>"
             $("#tbody").append(temp)
+            var temp2 = "<option value="+response.t_data[i].company_name+">"+response.t_data[i].company_name+"</option>"
+            $("#comlist").append(temp2);
           }
         },
         error : function(response){
