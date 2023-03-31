@@ -22,9 +22,11 @@ def login(request):
                     return HttpResponseRedirect(url)
                     # return HttpResponse("Investor")
                 elif data['catagory'] == 'startup':
-                    # url = "/startup/home/?user_id={}".format(userdata.id)
-                    # return HttpResponseRedirect(url)
-                    return HttpResponse("Startup")
+                    userid = int(data['id'])
+                    request.session['id']  = userid
+                    url = "/startup/home/?user_id={}".format(userid)
+                    return HttpResponseRedirect(url)
+                    # return HttpResponse("Startup")
                 elif data['catagory'] == 'admin':
                     # url = "/admin/home/?user_id={}".format(userdata.id)
                     # return HttpResponseRedirect(url)
