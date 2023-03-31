@@ -19,7 +19,7 @@
 <div class="container" style=" text-align: center; width:40%;" >
     <h1 >Describe your Product</h1>
     <hr>
-    <form action="{% url 'startupBasicInfo' %}" method="post" enctype="multipart/form-data">
+    <form action="{% url 'startupHome' %}" method="post" enctype="multipart/form-data">
       {% csrf_token %}
         <!-- <label class="form-label mt-2"><b>Name</b></label> -->
         <input type="texttext" name="name" required class="form-control" placeholder="Name of your product">

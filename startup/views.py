@@ -7,6 +7,11 @@ from startup.models import startupBasicInfo
 
 # Create your views here.
 def startupInfo(request):
+    # if request.method == 'GET':
+    #     id = request.GET.get('user_id')
+    
+    id = request.session['id']
+        
     if request.method == 'POST':
         name = request.POST.get('name')
         duration = request.POST.get('duration')
@@ -20,10 +25,17 @@ def startupInfo(request):
         licence = request.FILES.get('licence')
         
         # return HttpResponseRedirect(request,"/startupInfo/")
-        en = startupBasicInfo(name=name, duration=duration,investment=investment,roi=roi,Repayments=Repayments,description=description,image=image,vat=vat,bin=bin,licence=licence,)
+        en = startupBasicInfo(user_id_id=id, name=name, duration=duration,investment=investment,roi=roi,Repayments=Repayments,description=description,image=image,vat=vat,bin=bin,licence=licence,)
         en.save()
-        return HttpResponse(request,'startupDashboard.html')
+        url = "/startup/startupDashboard/?user_id={}".format(id)
+        return HttpResponseRedirect(url)
     return render(request,"startupBasicInfo.html")
-
 def startupDashboard (request):
-    return render(request,"startupDashboard.html")
+    startupData =  startupBasicInfo.objects.all()
+    data={
+        'startupData':startupData
+    }
+    return render(request,"startupDashboard.html",data)
+
+def startupList (request):
+    return render(request,"startupList.html")

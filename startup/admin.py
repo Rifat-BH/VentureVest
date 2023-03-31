@@ -4,5 +4,5 @@ from django.contrib import admin
 from startup.models import startupBasicInfo
 
 class startupAdmin(admin.ModelAdmin):
-    list_display=('name','duration','investment','Repayments','description','image','vat','bin','licence')
+    list_display=('user_id','name','duration','investment','Repayments','description','image','vat','bin','licence')
 admin.site.register(startupBasicInfo,startupAdmin)
