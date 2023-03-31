@@ -9,9 +9,8 @@ from startup.models import startupBasicInfo
 def startupInfo(request):
     # if request.method == 'GET':
     #     id = request.GET.get('user_id')
-    
     id = request.session['id']
-        
+    checkuser= startupBasicInfo.objects.filter(user_id_id = id).values()
     if request.method == 'POST':
         name = request.POST.get('name')
         duration = request.POST.get('duration')
@@ -29,9 +28,16 @@ def startupInfo(request):
         en.save()
         url = "/startup/startupDashboard/?user_id={}".format(id)
         return HttpResponseRedirect(url)
-    return render(request,"startupBasicInfo.html")
+    if len(checkuser)==0:
+        return render(request,"startupBasicInfo.html")
+    else:
+        url = "/startup/startupDashboard/?user_id={}".format(id)
+        return HttpResponseRedirect(url)
+    #   return render(request,"startupDashboard.html")
+  
 def startupDashboard (request):
-    startupData =  startupBasicInfo.objects.all()
+    id = request.session['id']
+    startupData =  startupBasicInfo.objects.get(user_id_id = id)
     data={
         'startupData':startupData
     }

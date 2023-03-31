@@ -6,38 +6,33 @@
   </head>
 
   <body>
+
     <div class="container">
       <div class="left">
-        <img
-          src="{{startupData.image}}"
-          alt=""
-          class="img1"
-        />
+        <img src="{{ startupData.image.url }}" alt="" style="border-radius: 10px;" class="img1"/>
         <table class="table table-bordered">
           <tbody>
             <tr>
               <th scope="row">Duration</th>
-              <td>Mark</td>
+              <td>{{ startupData.duration }}</td>
             </tr>
             <tr>
               <th scope="row">Min. Investment</th>
-              <td>Jacob</td>
+              <td>{{ startupData.investment }}</td>
             </tr>
             <tr>
               <th scope="row">Projected ROI</th>
-              <td colspan="2">Larry the Bird</td>
+              <td colspan="2">{{ startupData.roi }}</td>
             </tr>
             <tr>
-              <th scope="row">Risk Grade</th>
-              <td colspan="2">Larry the Bird</td>
+              <th scope="row">Repayments</th>
+              <td colspan="2">{{ startupData.Repayments }}</td>
             </tr>
           </tbody>
         </table>
 
         <h1><label for="Overview">Overview</label></h1>
-        <label for="text"
-          >{{startupData.description}}</label
-        >
+        <label for="text">{{ startupData.description }}</label>
       </div>
 
       <div class="right">
@@ -45,7 +40,7 @@
         <br /><br />
         <i class="fa fa-map-marker"></i>
         <label for="location">Bansree, Dhaka</label> <br />
-        <h3><label for="name">Birir Dokan</label></h3>
+        <h3><label for="name">{{ startupData.name }}</label></h3>
         <div class="row">
           <div class="div1 col-4">
             <h4>

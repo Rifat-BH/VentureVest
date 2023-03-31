@@ -32,7 +32,7 @@ def login(request):
                     # return HttpResponseRedirect(url)
                     return HttpResponse("Startup")
             else:
-                return HttpResponseRedirect("/login/")
+                return HttpResponseRedirect("login")
 
     return render(request, "login.html")
 
@@ -63,5 +63,7 @@ def signup(request):
         
 
     return render(request, "signup.html")
+
 def logout(request):
+    del request.session['id']
     return render(request, "login.html")
