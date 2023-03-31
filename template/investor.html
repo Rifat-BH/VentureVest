@@ -23,8 +23,8 @@
           var data = google.visualization.arrayToDataTable(data_arr);
           var options = {
             chart: {
-              title: 'Company Performance',
-              subtitle: 'Sales',
+              title: 'Invest History',
+              subtitle: 'Total Invest per month',
             },
             bars: 'vertical', // Required for Material Bar Charts.
             colors: ['#0e3253']
@@ -69,10 +69,10 @@
   function drawChart() {
 
     var data = new google.visualization.DataTable();
-    data.addColumn('number', 'Day');
-    data.addColumn('number', 'Guardians of the Galaxy');
-    data.addColumn('number', 'The Avengers');
-    data.addColumn('number', 'Transformers: Age of Extinction');
+    data.addColumn('number', 'Month-1');
+    data.addColumn('number', 'Month-2');
+    data.addColumn('number', 'Month-3');
+    data.addColumn('number', 'Month-4');
 
     data.addRows([
       [1, 37.8, 80.8, 41.8],
@@ -93,8 +93,8 @@
 
     var options = {
       chart: {
-        title: 'Box Office Earnings in First Two Weeks of Opening',
-        subtitle: 'in millions of dollars (USD)'
+        title: 'Company Performance',
+        subtitle: 'Last 6 Months Sell'
       },
       width: 950,
       height: 400,
