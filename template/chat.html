@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% block title%} Chat {% endblock %}
+{% block css%}
+<link rel="stylesheet" href="/static/chat.css"> {% endblock %}
+
+{% block contant %}
+<div class="container-fluid">
+    <div class="row">
+        <div style="height: 700px; overflow-y: scroll; width: 30%;">
+            <h3>Chat</h3>
+            <!-- search -->
+            <div class="row">
+                <div class="col-9">
+                    <input type="text" class="form-control" name="" id=""
+                        style="border-radius: 15px; border: 1px solid black;">
+                </div>
+                <div class="col-3 m-0" style="margin-left: -20px;">
+                    <button type="button" class="btn btn-outline-dark">Search</button>
+                </div>
+            </div>
+            <!-- profile list -->
+            <div class="row text-center my-2">
+                <div class="col-2">
+                    <img src="https://static.vecteezy.com/system/resources/previews/002/002/403/original/man-with-beard-avatar-character-isolated-icon-free-vector.jpg"
+                        alt="" style="border-radius: 50%; height: 50px; width: 50px;">
+                </div>
+                <div class="col-8 text-center" style="margin-left: -30px; padding-top: 10px;">
+                    <h5 style="justify-content: center; text-align: center;">Abu Sayem Md Siam</h5>
+                </div>
+            </div>
+
+            <div class="row text-center my-2">
+                <div class="col-2">
+                    <img src="https://static.vecteezy.com/system/resources/previews/002/002/403/original/man-with-beard-avatar-character-isolated-icon-free-vector.jpg"
+                        alt="" style="border-radius: 50%; height: 50px; width: 50px;">
+                </div>
+                <div class="col-8 text-center" style="margin-left: -30px; padding-top: 10px;">
+                    <h5 style="justify-content: center; text-align: center;">Abu Sayem Md Siam</h5>
+                </div>
+            </div>
+
+            <div class="row text-center my-2">
+                <div class="col-2">
+                    <img src="https://static.vecteezy.com/system/resources/previews/002/002/403/original/man-with-beard-avatar-character-isolated-icon-free-vector.jpg"
+                        alt="" style="border-radius: 50%; height: 50px; width: 50px;">
+                </div>
+                <div class="col-8 text-center" style="margin-left: -30px; padding-top: 10px;">
+                    <h5 style="justify-content: center; text-align: center;">Abu Sayem Md Siam</h5>
+                </div>
+            </div>
+
+            <div class="row text-center my-2">
+                <div class="col-2">
+                    <img src="https://static.vecteezy.com/system/resources/previews/002/002/403/original/man-with-beard-avatar-character-isolated-icon-free-vector.jpg"
+                        alt="" style="border-radius: 50%; height: 50px; width: 50px;">
+                </div>
+                <div class="col-8 text-center" style="margin-left: -30px; padding-top: 10px;">
+                    <h5 style="justify-content: center; text-align: center;">Abu Sayem Md Siam</h5>
+                </div>
+            </div>
+
+            <div class="row text-center my-2">
+                <div class="col-2">
+                    <img src="https://static.vecteezy.com/system/resources/previews/002/002/403/original/man-with-beard-avatar-character-isolated-icon-free-vector.jpg"
+                        alt="" style="border-radius: 50%; height: 50px; width: 50px;">
+                </div>
+                <div class="col-8 text-center" style="margin-left: -30px; padding-top: 10px;">
+                    <h5 style="justify-content: center; text-align: center;">Abu Sayem Md Siam</h5>
+                </div>
+            </div>
+        </div>
+
+        <div style="height: 700px; overflow-y: scroll; width: 70%;">
+            <!-- navbar -->
+            <nav class="navbar" style="background-color: rgba(201, 201, 201, 0.719);">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">
+                        <img src="https://static.vecteezy.com/system/resources/previews/002/002/403/original/man-with-beard-avatar-character-isolated-icon-free-vector.jpg"
+                            alt="Logo" width="50" height="50" class="d-inline-block align-text-top"
+                            style="border-radius: 50%;">
+                        <span style="padding-top: 20px; margin-top: 10px;">User Name</span>
+                    </a>
+                </div>
+            </nav>
+
+            <div class="container">
+                <div class="recever">
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officia odit ad eaque! Illum,
+                    molestias saepe.
+                </div>
+
+
+                <div class="sender">
+                    Lorem ipsum dolor sit amet.
+                </div>
+
+                <div class="sender">
+                    Lorem ipsum dolor sit.
+                </div>
+
+                <div class="recever">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                </div>
+
+
+
+            </div>
+
+            <div style="align-items: flex-end; position:absolute; bottom: 0; justify-content: end; width: 80%;">
+                <form action="" method="post">
+                    <div class="row">
+                        <div class="col-9">
+                            <textarea class="form-control" placeholder="Aa" id="floatingTextarea"></textarea>
+                        </div>
+                        <div class="col-3" style="margin-top: 10px;">
+                            <button type="button" class="btn btn-primary">Send</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

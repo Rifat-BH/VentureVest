@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "auths",
     "investor",
     "startup",
+    "chatapp",
 
 ]
 
