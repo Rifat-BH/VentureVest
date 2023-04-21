@@ -7,5 +7,6 @@ class MessageDb(models.Model):
     r_id = models.ForeignKey(Auts,blank = True, null = True, on_delete= models.CASCADE, related_name='r_id')
     send_date = models.DateTimeField(default=datetime.now())
     msgg = models.CharField(max_length=1000)
+    status = models.CharField(max_length=7, default ="unseen")
 
 
