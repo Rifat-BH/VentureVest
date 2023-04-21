@@ -37,7 +37,7 @@
 
         </div>
 
-        <div style="height: 700px; overflow-y: scroll; width: 70%;">
+        <div style="height: 600px; overflow-y: scroll; width: 70%;">
             <!-- navbar -->
             <nav class="navbar" style="background-color: rgba(201, 201, 201, 0.719);">
                 <div class="container-fluid">
@@ -73,7 +73,7 @@
 
             </div>
 
-            <div style="align-items: flex-end; position:absolute; bottom: 0; justify-content: end; width: 80%;">
+            <div style="align-items: flex-end; position:absolute; bottom: 0; justify-content: end; width: 80%; margin-bottom: -85px;">
                 <form action="/chat/startup/send" method="post" id="send_message">
                     {% csrf_token %}
                     <input type="hidden" name="s_id" id="s_id" value="{{s_id}}">
@@ -114,6 +114,33 @@
                 }
             });
         });
+        let rec_id = $("#rec_id").val();
+        let s = $("#s_id").val();
+        setInterval(function(){
+            $.ajax({
+                type : 'GET',
+                url : '/chat/startup-profilemsg/'+rec_id,
+                success: function(response){
+                    console.log(response);
+                    $("#chat-body").empty();
+                    for(i in response.msg_data){
+                        // console.log(response.msg_data[i].msgg);
+                        if(response.msg_data[i].s_id_id == s){
+                            let temp = '<div class="sender">'+ response.msg_data[i].msgg +'</div>';
+                            $("#chat-body").append(temp);
+                        }
+                        else{
+                            let temp = '<div class="recever">'+ response.msg_data[i].msgg +'</div>';
+                            $("#chat-body").append(temp);
+                        }
+
+                    }
+                },
+                error: function(response){
+                    console.log(response);
+                },
+            });
+        },1000);
     });
 
 </script>

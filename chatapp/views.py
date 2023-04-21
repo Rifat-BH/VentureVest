@@ -9,7 +9,7 @@ def home(request):
     id = request.session['id']
     print(id)
 
-    messages = MessageDb.objects.select_related('r_id').filter(r_id=id).values('s_id').annotate(count=Count('s_id')).order_by('-send_date')
+    messages = MessageDb.objects.filter(r_id=id).values('s_id').annotate(count=Count('s_id'))
 
     name_list=[]
     for m in messages:
@@ -37,8 +37,35 @@ def get_message(request,rec_id):
     id = request.session['id']
     print(id)
 
-    messages = MessageDb.objects.select_related('r_id').filter(r_id=id).values('s_id').annotate(count=Count('s_id')).order_by('-send_date')
+    messages = MessageDb.objects.filter(r_id=id).values('s_id').annotate(count=Count('s_id'))
+    print(messages)
+    name_lists=[]
+    for m in messages:
+        s_id = m['s_id']
+        fname = Auts.objects.filter(id = s_id).values('full_name')
+        for i in fname:
+            name = i['full_name']
+            name_lists.append((name,s_id))
+    print(list(messages))
+    print(name_lists)
+    rid = rec_id
 
+    get_message = MessageDb.objects.filter(Q(s_id = id, r_id =rid) | Q(s_id = rid, r_id =id)).values().order_by('send_date')
+    # print(get_message)
+    data ={
+        'rec_name' : name_lists,
+        'rec_id' : rid,
+        's_id' : id,
+    }
+    # return JsonResponse({"msg_data" : list(get_message)})
+    return render(request,'chat.html',data)
+
+def get_messages(request,rec_id):
+    id = request.session['id']
+    print(id)
+
+    messages = MessageDb.objects.select_related('r_id').filter(r_id=id).values('s_id').annotate(count=Count('s_id')).order_by('-send_date')
+    print(messages)
     name_list=[]
     for m in messages:
         s_id = m['s_id']
@@ -50,14 +77,14 @@ def get_message(request,rec_id):
     print(name_list)
     rid = rec_id
 
-    get_message = MessageDb.objects.filter(Q(s_id = id, r_id =rid) | Q(s_id = rid, r_id =id)).values().order_by('send_date')
-    print(get_message)
+    get_message = MessageDb.objects.filter(Q(s_id = id, r_id =rid) | Q(s_id = rid, r_id =id)).values().order_by('id')
+    # print(get_message)
     data ={
         'rec_name' : name_list,
         'rec_id' : rid,
         's_id' : id,
     }
-    return render(request,'chat.html',data)
+    return JsonResponse({"msg_data" : list(get_message)})
 
 
 def send_message(request):
