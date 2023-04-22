@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "investor",
     "startup",
     "chatapp",
+    "community",
 
 ]
 
