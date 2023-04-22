@@ -22,12 +22,14 @@ def home(request):
     print(name_list)
     print(name_list[0][1])
     rid = name_list[0][1]
+    rname= name_list[0][0]
 
     get_message = MessageDb.objects.filter(Q(s_id = id, r_id =rid) | Q(s_id = rid, r_id =id)).values().order_by('send_date')
     print(get_message)
     data ={
         'rec_name' : name_list,
         'rec_id' : rid,
+        'r_name' : rname,
         's_id' : id,
     }
     return render(request,'chat.html',data)
@@ -52,10 +54,13 @@ def get_message(request,rec_id):
 
     get_message = MessageDb.objects.filter(Q(s_id = id, r_id =rid) | Q(s_id = rid, r_id =id)).values().order_by('send_date')
     # print(get_message)
+    name = Auts.objects.get(id = rid)
+    fullname = name.full_name
     data ={
         'rec_name' : name_lists,
         'rec_id' : rid,
         's_id' : id,
+        'r_name' : fullname,
     }
     # return JsonResponse({"msg_data" : list(get_message)})
     return render(request,'chat.html',data)
@@ -79,10 +84,14 @@ def get_messages(request,rec_id):
 
     get_message = MessageDb.objects.filter(Q(s_id = id, r_id =rid) | Q(s_id = rid, r_id =id)).values().order_by('id')
     # print(get_message)
+    name = Auts.objects.get(id = rid)
+    fullname = name.full_name
+    print(fullname)
     data ={
         'rec_name' : name_list,
         'rec_id' : rid,
         's_id' : id,
+        'r_name' : fullname,
     }
     return JsonResponse({"msg_data" : list(get_message)})
 
