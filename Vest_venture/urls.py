@@ -26,6 +26,10 @@ urlpatterns = [
     path('startup/', include('startup.urls')),
     path('logout/', include('auths.urls')),
     path('chat/', include('chatapp.urls')),
+<<<<<<< HEAD
+=======
+    path('community/', include('community.urls')),
+>>>>>>> community
 ]
 
 if settings.DEBUG:  

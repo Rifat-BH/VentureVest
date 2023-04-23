@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}Post Details{% endblock %}
+
+{% block contant %}
+<!-- post -->
+<div class="container">
+    <div class="card my-2">
+        <div class="card-header">
+
+            <a href="#">{{post.post_by.full_name}}</a>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title"><a href="">{{post.post_title}}</a></h5>
+            <p class="card-text">{{post.post_des}}</p>
+
+        </div>
+    </div>
+</div>
+<hr>
+
+<div class="container">
+    <div class="row">
+        <!-- post a comment -->
+        <div class="container">
+            <form action="/community/post-comment/{{post.id}}/" method="post">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col">
+                        <label for="exampleFormControlTextarea1" class="form-label">Write a comment</label>
+                        <textarea class="form-control" name="comment" id="exampleFormControlTextarea1"
+                            rows="2"></textarea>
+                    </div>
+                    <div class="col">
+                        <input type="submit" name="post_comment" value="Post" class="btn mt-5"
+                            style="background-color: #15252B; color :white">
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <br>
+    <br>
+    <div class="row">
+        <!-- comment section -->
+        <div class="container">
+            {% for cmnt in comment  %}
+            <div class="row m-2">
+                <div class="card mt-2 w-75 m-auto">
+                    <div class="card-header" style="display:inline-flex; height:55px">
+                        <p style="padding: 8px 10px; font-size:16px"><b>{{cmnt.comment_by.full_name}}</b></p>
+                    </div>
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                            <p>
+                                {{cmnt.comment}}
+                            </p>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
