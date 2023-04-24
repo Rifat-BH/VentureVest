@@ -26,7 +26,7 @@ def login(request):
                 elif data['catagory'] == 'startup':
                     userid = int(data['id'])
                     request.session['id']  = userid
-                    url = "/startup/home/?user_id={}".format(userid)
+                    url = "/startup/home/"
                     return HttpResponseRedirect(url)
                     # return HttpResponse("Startup")
                 elif data['catagory'] == 'admin':

@@ -8,6 +8,6 @@ class Invest(models.Model):
     company_name = models.CharField(max_length=50)
     invest_ammount = models.CharField(max_length=10)
     returen_rate = models.CharField(max_length=5)
-
+    
     
 # auto_now_add=True

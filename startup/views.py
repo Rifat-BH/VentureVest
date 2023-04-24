@@ -26,12 +26,12 @@ def startupInfo(request):
         # return HttpResponseRedirect(request,"/startupInfo/")
         en = startupBasicInfo(user_id_id=id, name=name, duration=duration,investment=investment,roi=roi,Repayments=Repayments,description=description,image=image,vat=vat,bin=bin,licence=licence,)
         en.save()
-        url = "/startup/startupDashboard/?user_id={}".format(id)
+        url = "/startup/startupDashboard/"
         return HttpResponseRedirect(url)
     if len(checkuser)==0:
         return render(request,"startupBasicInfo.html")
     else:
-        url = "/startup/startupDashboard/?user_id={}".format(id)
+        url = "/startup/startupDashboard"
         return HttpResponseRedirect(url)
     #   return render(request,"startupDashboard.html")
   
@@ -45,3 +45,11 @@ def startupDashboard (request):
 
 def startupList (request):
     return render(request,"startupList.html")
+
+def startupDetails(request,st_id):
+    id = st_id
+    startupData =  startupBasicInfo.objects.get(user_id_id = id)
+    data={
+        'startupData':startupData
+    }
+    return render(request,"startupDashboard.html",data)

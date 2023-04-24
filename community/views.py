@@ -8,11 +8,16 @@ def posts(request):
     user_id = request.session['id']
     all_posts = CommunityPost.objects.select_related('post_by').all().order_by('-post_date')
     print(all_posts)
+    get_notifi = CommentNofity.objects.filter(post_by_id = user_id).order_by('-comment_date').values()
+    count_notifi = CommentNofity.objects.filter(Q(post_by_id = user_id) & Q(status=0)).values()
+    count_n = len(count_notifi)
     # for a in all_posts:
     #     print(a.post_by.full_name)
     data ={
         'user_id' : user_id,
-        'posts' : all_posts.values()
+        'posts' : all_posts.values(),
+        'notif' : get_notifi,
+        'nc' : count_n
     }
     return render(request,"community.html",data)
     # return JsonResponse({'all_post': list(all_posts.values())})
