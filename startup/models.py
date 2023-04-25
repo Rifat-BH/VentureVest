@@ -14,3 +14,4 @@ class startupBasicInfo(models.Model):
     vat = models.ImageField(default="")
     bin = models.ImageField(default="")
     licence = models.ImageField(default="")
+    

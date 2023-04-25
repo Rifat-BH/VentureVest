@@ -1,105 +1,209 @@
 {% extends 'base.html' %}
 
 {% block contant %}
-  <head>
-    <link rel="stylesheet" href="/static/startupDashboard.css" />
-  </head>
 
-  <body>
+<head>
+  <!-- <link rel="stylesheet" href="/static/startupDashboard.css" /> -->
+</head>
+<style>
+  .form-control,
+  .input-group-text {
+    margin-bottom: 10px;
+  }
 
-    <div class="container">
-      <div class="left">
-        <img src="{{ startupData.image.url }}" alt="" style="border-radius: 10px;" class="img1"/>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+  }
+
+  header {
+    background-color: #ededed;
+    color: rgb(28, 41, 55);
+    padding: 10px;
+    text-align: center;
+  }
+
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  #key-numbers {
+    
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-gap: 20px;
+  }
+
+  .number {
+    background:  #ededed;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .number h6 {
+    margin-top: 0;
+  }
+
+  #fundraising {
+    margin-top: 50px;
+  }
+
+  #chart {
+    height: 300px;
+    background-color: #f1f1f1;
+  }
+</style>
+
+<body>
+  <header>
+    <h1>{{ startupData.companyName }}</h1>
+    <i class="fa fa-map-marker"></i>
+    <label for="location">{{ startupData.companyAddress }}</label> <br /> <br>
+    <div class="row" style="text-align: center;">
+      <div class="col-4"></div>
+      <div class="col-4">
+        <p>{{ startupData.companyDescription }}</p>
+      </div>
+      <div class="col-4"></div>
+    </div>
+    <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Apply for Fundraising
+    </button>
+  </header>
+  <div class="container p-5">
+    <div class="row">
+      <div class="col-md ">
+        {% comment %} <img src="{{ startupData.image.url }}" alt="" style="border-radius: 10px; width:100%;" /> {% endcomment %}
+      </div>
+      <div class="col-md pt-5">
+        {% comment %} <h6>Product name: <b> {{ startupData.name }}</b> </h6> {% endcomment %}
+        <hr>
         <table class="table table-bordered">
           <tbody>
             <tr>
-              <th scope="row">Duration</th>
-              <td>{{ startupData.duration }}</td>
+              <th scope="row">Duration of fundraising</th>
+              {% comment %} <td>{{ startupData.duration }}</td> {% endcomment %}
             </tr>
             <tr>
               <th scope="row">Min. Investment</th>
-              <td>{{ startupData.investment }}</td>
+              {% comment %} <td>{{ startupData.investment }}</td> {% endcomment %}
             </tr>
             <tr>
               <th scope="row">Projected ROI</th>
-              <td colspan="2">{{ startupData.roi }}</td>
+              {% comment %} <td colspan="2">{{ startupData.roi }}</td> {% endcomment %}
             </tr>
             <tr>
               <th scope="row">Repayments</th>
-              <td colspan="2">{{ startupData.Repayments }}</td>
+              {% comment %} <td colspan="2">{{ startupData.Repayments }}</td> {% endcomment %}
             </tr>
           </tbody>
         </table>
-
-        <h1><label for="Overview">Overview</label></h1>
-        <label for="text">{{ startupData.description }}</label>
-      </div>
-
-      <div class="right">
-        <label for="condition">ASSET FINANCING | SALE CONTRACT </label>
-        <br /><br />
-        <i class="fa fa-map-marker"></i>
-        <label for="location">Bansree, Dhaka</label> <br />
-        <h3><label for="name">{{ startupData.name }}</label></h3>
-        <div class="row">
-          <div class="div1 col-4">
-            <h4>
-              <label for="amount" style="margin-top: 25px">৳ 387,000 </label>
-            </h4>
-            <h5>Raised</h5>
-          </div>
-          <div class="div2 col-4">
-            <h4>
-              <label for="amount" style="margin-top: 25px">৳ 140,200 </label>
-            </h4>
-            <h5>Being Processed</h5>
-          </div>
-          <div class="div3 col-4">
-            <h4>
-              <label for="amount" style="margin-top: 25px">5 </label>
-            </h4>
-            <h5>Days Left</h5>
-          </div>
-        </div>
-        <label for="" style="margin-top: 10px; font-size: large">Raised</label>
-        <div class="progress">
-          <div
-            class="progress-bar"
-            role="progressbar"
-            aria-label="Example with label"
-            style="width: 25%"
-            aria-valuenow="25"
-            aria-valuemin="0"
-            aria-valuemax="100"
-          >
-            25%
-          </div>
-        </div>
-        <h6>
-          <label for="goal" style="margin-top: 10px">Goals: </label>
-          <label for="tk">৳ 750,000 </label>
-        </h6>
-        <div class="d-grid gap-2 d-md-block">
-          <button>৳ 750,000</button>
-          <button>৳ 750,000</button>
-          <button>৳ 750,000</button>
-          <button>৳ 750,000</button>
-        </div>
-        <input type="number" name="" id="" class="btncng" >
-        
+        <hr>
+        <h6> <b>Overview </b></h1>
+          {% comment %} <label for="text">{{ startupData.description }}</label> {% endcomment %}
       </div>
     </div>
 
-    <script
-      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-      integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
-      integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+    <div class="right">
+
+    </div>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Describe your Product</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="container" style=" text-align: center;">
+            <form action="{% url 'startupHome' %}" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <input type="text" name="name" required class="form-control" placeholder="Name of your product">
+              <input type="number" name="duration" required class="form-control"
+                placeholder="Duration (e.g. 11 Months)">
+              <input type="number" name="investment" required class="form-control"
+                placeholder="Min. Investment (e.g. 10,000 tk)">
+              <input type="number" name="roi" required class="form-control" placeholder="Projected ROI (e.g. 15%)">
+              <input type="text" name="Repayments" required class="form-control"
+                placeholder="Repayments (e.g. 4 installments)">
+              <div class="input-group">
+                <label class="input-group-text" for="image">Product Image.</label>
+                <input type="file" required class="form-control" name="image" id="image" />
+              </div>
+              <textarea class="form-control" name="description" required placeholder="Describe your product"
+                style="height: 100px"></textarea>
+              <hr>
+              <b>Current status</b>
+              <input type="number" name="revenue" required class="form-control" placeholder="Revenue">
+              <input type="number" name="gross_margin" required class="form-control" placeholder="Gross Margin">
+              <input type="number" name="mrr" required class="form-control" placeholder="Monthly Recurring Revenue">
+              <input type="number" name="cac" required class="form-control" placeholder="Customer Acquisition Cost">
+              <input type="number" name="burn_rate" required class="form-control" placeholder="Burn Rate">
+
+              <hr>
+              <label for="input-group"> <b> Upload Some necessary documents</b> </label>
+              <div class="input-group">
+                <label class="input-group-text" for="vat">VAT.</label>
+                <input type="file" class="form-control" name="vat" id="vat" />
+              </div>
+              <div class="input-group">
+                <label class="input-group-text" for="bin">BIN.</label>
+                <input type="file" class="form-control" name="bin" id="bin" />
+              </div>
+              <div class="input-group">
+                <label class="input-group-text" for="licence">License.</label>
+                <input type="file" class="form-control" name="licence" id="licence" />
+              </div>
+              <button type="submit" class="btn btn-dark">Post</button>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <main>
+    <section id="key-numbers">
+      <div class="number">
+        <h6>Revenue</h6>
+        <p>$10,000</p>
+      </div>
+      <div class="number">
+        <h6>Gross Margin</h6>
+        <p>50%</p>
+      </div>
+      <div class="number">
+        <h6>Monthly Recurring Revenue</h6>
+        <p>$5,000</p>
+      </div>
+      <div class="number">
+        <h6>Customer Acquisition Cost</h6>
+        <p>$100</p>
+      </div>
+      <div class="number">
+        <h6>Burn Rate</h6>
+        <p>$50,000</p>
+      </div>
+    </section>
+    <section id="fundraising">
+      <h2>Fundraising</h2>
+      <p>Current situation of fundraising product</p>
+      <div id="chart"></div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+    integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+    crossorigin="anonymous"></script>
+</body>
+
 </html>
 {% endblock %}

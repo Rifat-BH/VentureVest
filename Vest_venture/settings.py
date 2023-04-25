@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "startup",
     "chatapp",
     "community",
+    "backupStartupDB",
 
 ]
 
