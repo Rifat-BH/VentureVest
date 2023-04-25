@@ -100,14 +100,20 @@ def startupDashboard (request):
 
 
 def startupList (request):
-    user_id = request.session['id']
-    startupData =  startupBasicInfo2.objects.all()
     startupData2 =  applyForFundrising.objects.all()
-    startupData3 =  monthlyRevenue.objects.all()
     data ={
-        'startupData' : startupData,
-        'startupData2' : startupData2,
-        'startupData3' : startupData3
+        'startupData2' : startupData2
     }
     return render(request,"startupList.html",data)
     # return render(request,"startupList.html")
+    
+def startupDetailsViews(request,id):
+    startupData =  startupBasicInfo2.objects.get(user_id_id = id)
+    startupData2 =  applyForFundrising.objects.get(user_id_id = id)
+    startupData3 =  monthlyRevenue.objects.filter(user_id_id = id)
+    data={
+        'startupData':startupData,
+        'startupData2':startupData2,
+        'startupData3':startupData3
+    }
+    return render(request,"startupDetails.html",data)

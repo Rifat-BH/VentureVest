@@ -76,7 +76,9 @@
             <hr>
             <p style="height:150px; overflow: hidden;
             text-overflow: ellipsis;">{{st2.description}}... </p>
-            <a href="" class="btn"> <b>More details</b></a>  
+            {% comment %} <a href="{% url 'startupDetails' %}?id={{st2.user_id_id}}" class="btn"> <b>More details</b></a>   {% endcomment %}
+            <a href="/startup/startupDetails/{{st2.user_id_id}}" class="btn"> <b>More details</b></a>  
+
         </div>
         
     </div>
