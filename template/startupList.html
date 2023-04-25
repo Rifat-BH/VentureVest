@@ -1,165 +1,92 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
+
+{% block contant %}
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <!-- {% comment %} <link rel="stylesheet" href="/static/startupList.css"> {% endcomment %} -->
     <style>
-        *{
-            margin: 0px;
-            padding: 0px;
-            font-family: sans-serif;
-        }
-        
-        .body{
-            display: flex;
-            justify-content: center;
-            height: 100vh;
-            align-items: center;
-            background: whitesmoke;
-        }
-        
-        img{
-             height: 700px;
-             border-radius: 3px;
-        }
-        
-        .container{
-            display: flex;
-            margin-top: 10px;
-            margin-left: 20px;
-        
-        }
-        
-        .card{
-            height: 700px;
-            margin: 50px;
-            box-shadow: 5px 5px 20px black;
-            overflow: hidden;
-        }
-        
-        .card .intro{
-            height: 280px;
-            width: 457px;
-            padding: 6px;
+        * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
-            position: absolute;
-            background: rgba(41, 40, 40, 0.5);
-            color: white;
-            transition: .5s;
-            bottom: -163px;
         }
-        
-        .header{
+
+       
+
+        .card-container {
+            margin: 20px 20px;
+            display: flex;
             justify-content: center;
             align-items: center;
-            text-align: center;
-            margin: 50px;
+            gap: 15px;
+            flex-wrap: wrap;
         }
-        
-        
-        h1{
-            margin: 10px;
-            font-size: 40px;
+
+        .card {
+            width: 250px;
+            height: auto;
+            overflow: hidden;
+            text-overflow: clip;
+            position: relative;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 4px;
+            padding: 10px;
+            transition: all .3s ease-in;
         }
-        
-        .card:hover{
-            cursor: pointer;
+
+
+       
+
+        .card .card-title {
+            padding: 10px 5px;
+            font-size: 1.5rem;
+            text-shadow: 1px 0px 2px #262654;
         }
-        
-        .card:hover .intro{
-            height: 163px;
-            bottom: -100px;
+
+        .card:hover {
+            background: #246bae;
+            color: #ffffff;
+
         }
-        
-        .card:hover .img{
-            transform: scale(1.1) rotate(-3deg);
-        
+
+        .card .card-text {
+            line-height: 20px;
+            font-size: 400;
         }
-        
-        .header h1{
-            font-size: 50px;
-           position: relative;
-           text-decoration: none;
-           cursor: pointer;
-           
-        }
-        
-        .header h1:before{
-            content: "";
-            position: absolute;
-            height: 0.1em;
-            width: 52%;
-            background-color: black;
-            background-size: 200% 100%;
-            bottom: -0.1em;
-            transition: 1.5s;
-        }
-        
-        .header h1:hover:before{
-            background-position: 100% 0;
-        }
-        
-        
-        .btn{
-           border: 1px solid #0b0c0d;
-           background: none;
-           padding: 10px 20px;
-           font-size: 20px;
-           cursor: pointer;
-           margin: 10px;
-           margin-left: 280px;
-           margin-top: -100px;
-           color: rgb(9, 9, 8);
-        }
-        
-        
     </style>
 </head>
-<body>
-    <div class="header">
-        <h1>ONGOING INVESTMENT OPTIONS</h1>
-      </div>
 
-      <ul>
-        <li class="prev"><span></span></li>
-        <li class="next"><span></span></li>
-    </ul>
-    <div class="container">
-        <div class="card">
-            <img src="10997942.jpg" alt="">
-            <div class="intro">
-                 <h1>Fruit Mania</h1>
-                 <button class="btn">See Details</button>
-                 <p>Existing customer base with a monthly revenue stream. Repaid 100% of 1st investment on time.</p>
-                 <h1>15%* per annum</h1>
-                 <p>14075%* profit over 10 months period</p>
-            </div>
+<div class="card-container">
+    {% for st2 in  startupData2 %}
+    <div class="card">
+        <div class="card-image">
+            <img src="{{ st2.image.url }}" alt="" style="height:150px; width:150px; border: 1px double #022a3c;
+            border-radius: 5%;
+            background-position: center center;
+            background-size: cover;" />
         </div>
-
-        <div class="card">
-            <img src="istockphoto-1360107913-612x612.jpg" alt="">
-            <div class="intro">
-                 <h1>Cloths Valley</h1>
-                 <button class="btn">See Details</button>
-                 <p>Existing customer base with a monthly revenue stream. Repaid 100% of 1st investment on time.</p>
-                 <h1>15%* per annum</h1>
-                 <p>14075%* profit over 10 months period</p>
-            </div>
+        <div class="card-title">{{st2.name}}</div>
+        <div class="card-text">
+            <p>Duration: {{st2.duration}} Month</p>
+            <p>Min. Investment: {{st2.investment}} tk. </p>
+            <p>ROI: {{st2.roi}}% </p>
+            <hr>
+            <p style="height:150px; overflow: hidden;
+            text-overflow: ellipsis;">{{st2.description}}... </p>
+            <a href="" class="btn"> <b>More details</b></a>  
         </div>
-
-        <div class="card">
-            <img src="istockphoto-181875126-612x612.jpg" alt="">
-            <div class="intro">
-                 <h1>Watchdine</h1>
-                 <button class="btn">See Details</button>
-                 <p>Existing customer base with a monthly revenue stream. Repaid 100% of 1st investment on time.</p>
-                 <h1>15%* per annum</h1>
-                 <p>14075%* profit over 10 months period</p>
-            </div>
-        </div>
+        
     </div>
-</body>
-</html>
+    {% endfor %}
+</div>
+
+
+
+
+
+
+
+{% endblock %}
