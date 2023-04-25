@@ -6,5 +6,6 @@ urlpatterns = [
     path('home/', views.startupInfo, name="startupHome"),
     path('startupBasicInfo/', views.startupInfo, name="startupBasicInfo"),
     path('startupDashboard/', views.startupDashboard, name="startupDashboard"),
+    path('applyForFundrising/', views.applyForFundrisingViews, name="applyForFundrising"),
     path('startupList/', views.startupList, name="startupList"),
 ]

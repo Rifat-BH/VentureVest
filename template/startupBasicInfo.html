@@ -17,7 +17,7 @@
     <p>{{uid}}</p>
 </div>
 <div class="container" style=" text-align: center; width:40%;" >
-    <h1 >Describe your Product</h1>
+    <h1 >Basic information of your Company</h1>
     <hr>
     <form action="{% url 'startupHome' %}" method="post" enctype="multipart/form-data">
       {% csrf_token %}
@@ -49,7 +49,7 @@
         <label class="input-group-text" for="licence">License.</label>
         <input type="file"  class="form-control" name="licence" id="licence" />
       </div> {% endcomment %}
-      <button type="submit" class="btn btn-dark" >Post</button>
+      <button type="submit" class="btn btn-dark" >Save</button>
     </form>
     
   </div>

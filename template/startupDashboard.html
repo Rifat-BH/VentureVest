@@ -76,34 +76,34 @@
   <div class="container p-5">
     <div class="row">
       <div class="col-md ">
-        {% comment %} <img src="{{ startupData.image.url }}" alt="" style="border-radius: 10px; width:100%;" /> {% endcomment %}
+        <img src="{{ startupData2.image.url }}" alt="" style="border-radius: 10px; width:100%;" />
       </div>
       <div class="col-md pt-5">
-        {% comment %} <h6>Product name: <b> {{ startupData.name }}</b> </h6> {% endcomment %}
+        <h6>Product name: <b> {{ startupData2.name }}</b> </h6>
         <hr>
         <table class="table table-bordered">
           <tbody>
             <tr>
               <th scope="row">Duration of fundraising</th>
-              {% comment %} <td>{{ startupData.duration }}</td> {% endcomment %}
+              <td>{{ startupData2.duration }} Months</td>
             </tr>
             <tr>
               <th scope="row">Min. Investment</th>
-              {% comment %} <td>{{ startupData.investment }}</td> {% endcomment %}
+              <td>{{ startupData2.investment }} tk.</td>
             </tr>
             <tr>
               <th scope="row">Projected ROI</th>
-              {% comment %} <td colspan="2">{{ startupData.roi }}</td> {% endcomment %}
+              <td colspan="2">{{ startupData2.roi }}%</td>
             </tr>
             <tr>
               <th scope="row">Repayments</th>
-              {% comment %} <td colspan="2">{{ startupData.Repayments }}</td> {% endcomment %}
+              <td colspan="2">{{ startupData2.Repayments }} Installment</td>
             </tr>
           </tbody>
         </table>
         <hr>
         <h6> <b>Overview </b></h1>
-          {% comment %} <label for="text">{{ startupData.description }}</label> {% endcomment %}
+          <label for="text">{{ startupData2.description }}</label>
       </div>
     </div>
 
@@ -121,29 +121,29 @@
         </div>
         <div class="modal-body">
           <div class="container" style=" text-align: center;">
-            <form action="{% url 'startupHome' %}" method="post" enctype="multipart/form-data">
+            <form action="{% url 'applyForFundrising' %}" method="post" enctype="multipart/form-data">
               {% csrf_token %}
-              <input type="text" name="name" required class="form-control" placeholder="Name of your product">
-              <input type="number" name="duration" required class="form-control"
+              <input type="text" name="name"  class="form-control" placeholder="Name of your product">
+              <input type="number" name="duration"  class="form-control"
                 placeholder="Duration (e.g. 11 Months)">
-              <input type="number" name="investment" required class="form-control"
+              <input type="number" name="investment"  class="form-control"
                 placeholder="Min. Investment (e.g. 10,000 tk)">
-              <input type="number" name="roi" required class="form-control" placeholder="Projected ROI (e.g. 15%)">
-              <input type="text" name="Repayments" required class="form-control"
+              <input type="number" name="roi"  class="form-control" placeholder="Projected ROI (e.g. 15%)">
+              <input type="text" name="Repayments"  class="form-control"
                 placeholder="Repayments (e.g. 4 installments)">
               <div class="input-group">
                 <label class="input-group-text" for="image">Product Image.</label>
-                <input type="file" required class="form-control" name="image" id="image" />
+                <input type="file"  class="form-control" name="image" id="image" />
               </div>
-              <textarea class="form-control" name="description" required placeholder="Describe your product"
+              <textarea class="form-control" name="description"  placeholder="Describe your product"
                 style="height: 100px"></textarea>
               <hr>
               <b>Current status</b>
-              <input type="number" name="revenue" required class="form-control" placeholder="Revenue">
-              <input type="number" name="gross_margin" required class="form-control" placeholder="Gross Margin">
-              <input type="number" name="mrr" required class="form-control" placeholder="Monthly Recurring Revenue">
-              <input type="number" name="cac" required class="form-control" placeholder="Customer Acquisition Cost">
-              <input type="number" name="burn_rate" required class="form-control" placeholder="Burn Rate">
+              <input type="number" name="revenue"  class="form-control" placeholder="Revenue">
+              <input type="number" name="gross_margin"  class="form-control" placeholder="Gross Margin">
+              <input type="number" name="mrr"  class="form-control" placeholder="Monthly Recurring Revenue">
+              <input type="number" name="cac"  class="form-control" placeholder="Customer Acquisition Cost">
+              <input type="number" name="burn_rate"  class="form-control" placeholder="Burn Rate">
 
               <hr>
               <label for="input-group"> <b> Upload Some necessary documents</b> </label>
@@ -159,7 +159,7 @@
                 <label class="input-group-text" for="licence">License.</label>
                 <input type="file" class="form-control" name="licence" id="licence" />
               </div>
-              <button type="submit" class="btn btn-dark">Post</button>
+              <button type="submit" value="post" name="post" class="btn btn-dark">Post</button>
             </form>
 
           </div>
@@ -171,23 +171,23 @@
     <section id="key-numbers">
       <div class="number">
         <h6>Revenue</h6>
-        <p>$10,000</p>
+        <p>{{ startupData2.revenue }} tk.</p>
       </div>
       <div class="number">
         <h6>Gross Margin</h6>
-        <p>50%</p>
+        <p>{{ startupData2.gross_margin }}%</p>
       </div>
       <div class="number">
         <h6>Monthly Recurring Revenue</h6>
-        <p>$5,000</p>
+        <p>{{ startupData2.mrr }} tk.</p>
       </div>
       <div class="number">
-        <h6>Customer Acquisition Cost</h6>
-        <p>$100</p>
+        <h6>Customer Acquisition Cost </h6>
+        <p>{{ startupData2.cac }} tk.</p>
       </div>
       <div class="number">
         <h6>Burn Rate</h6>
-        <p>$50,000</p>
+        <p>{{ startupData2.burn_rate }} tk.</p>
       </div>
     </section>
     <section id="fundraising">
