@@ -17,8 +17,8 @@
   }
 
   header {
-    background-color: #ededed;
-    color: rgb(28, 41, 55);
+    background-color: #e2e2e2;
+    color: rgb(3, 3, 3);
     padding: 10px;
     text-align: center;
   }
@@ -37,7 +37,7 @@
   }
 
   .number {
-    background:  #ededed;
+    background:  #e2e2e2;
     border-radius: 5px;
     padding: 10px;
     text-align: center;
@@ -170,26 +170,82 @@
   <main>
     <section id="key-numbers">
       <div class="number">
-        <h6>Revenue</h6>
+        <h6> <b>Revenue </b> </h6>
         <p>{{ startupData2.revenue }} tk.</p>
       </div>
       <div class="number">
-        <h6>Gross Margin</h6>
+        <h6><b>Gross Margin </b> </h6>
         <p>{{ startupData2.gross_margin }}%</p>
       </div>
       <div class="number">
-        <h6>Monthly Recurring Revenue</h6>
+        <h6><b>Monthly Recurring Revenue (MRR) </b> </h6>
         <p>{{ startupData2.mrr }} tk.</p>
       </div>
       <div class="number">
-        <h6>Customer Acquisition Cost </h6>
+        <h6><b>Customer Acquisition Cost </b>  </h6>
         <p>{{ startupData2.cac }} tk.</p>
       </div>
       <div class="number">
-        <h6>Burn Rate</h6>
+        <h6><b>Burn Rate </b> </h6>
         <p>{{ startupData2.burn_rate }} tk.</p>
       </div>
     </section>
+     
+    <hr>
+    <h2>Monthly Revenue</h2>
+    <p></p>
+    <!-- Button trigger modal -->
+<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+  Update Monthly revenue
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Update Monthly revenue</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'monthlyRevenue' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="revenue"><b>Month</b></label>
+        <input type="date" name="month"  class="form-control" placeholder="">
+        <label for=""><b>Current Revenue</b></label>
+        <input type="number" name="currentRevenue"  class="form-control" placeholder="">
+        <label for=""><b>Profit of this Month</b></label>
+        <input type="number" name="currentProfit"  class="form-control" placeholder="">
+        <button type="submit" value="post1" name="post1" class="btn btn-dark">Post</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Revenue</th>
+      <th scope="col">Profit</th>
+      <th scope="col">Month</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for st3 in startupData3  %}
+        <tr>
+          <th scope="row">{{ forloop.counter }}</th>
+          <td>{{ st3.currentRevenue}}</td>
+          <td>{{ st3.currentProfit}}</td>
+          <td>{{ st3.month}}</td>
+        </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+    <hr>
     <section id="fundraising">
       <h2>Fundraising</h2>
       <p>Current situation of fundraising product</p>

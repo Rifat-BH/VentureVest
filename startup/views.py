@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from auths.models import Auts
 from startup.models import startupBasicInfo
-from backupStartupDB.models import startupBasicInfo2, applyForFundrising
+from backupStartupDB.models import startupBasicInfo2, applyForFundrising, monthlyRevenue
 
 
 # Create your views here.
@@ -55,24 +55,46 @@ def applyForFundrisingViews(request):
         return HttpResponseRedirect(url)
         # return render(request,"startupDashboard.html",data)
         
-    
+def monthlyRevenueViews(request):
+    id = request.session['id']
+    if request.method == 'POST':
+        month = request.POST.get('month')
+        currentRevenue = request.POST.get('currentRevenue')
+        currentProfit = request.POST.get('currentProfit')
+        
+        en = monthlyRevenue(user_id_id=id, month=month, currentRevenue=currentRevenue,currentProfit=currentProfit)
+        en.save()
+        url = "/startup/startupDashboard/?user_id={}".format(id)
+        return HttpResponseRedirect(url)
+
 def startupDashboard (request):
     id = request.session['id']
     checkuser= applyForFundrising.objects.filter(user_id_id = id).values()
+    checkuser2= monthlyRevenue.objects.filter(user_id_id = id).values()
     # print(len(startupData))
     
-    if len(checkuser) == 0:
+    if len(checkuser) == 0 and len(checkuser2) == 0:
         startupData =  startupBasicInfo2.objects.get(user_id_id = id)
         data={
         'startupData':startupData,
         }
         return render(request,"startupDashboard.html",data)
-    else:
+    if len(checkuser2) == 0:
         startupData =  startupBasicInfo2.objects.get(user_id_id = id)
         startupData2 =  applyForFundrising.objects.get(user_id_id = id)
         data={
             'startupData':startupData,
             'startupData2':startupData2
+        }
+        return render(request,"startupDashboard.html",data)
+    else:
+        startupData =  startupBasicInfo2.objects.get(user_id_id = id)
+        startupData2 =  applyForFundrising.objects.get(user_id_id = id)
+        startupData3 =  monthlyRevenue.objects.filter(user_id_id = id)
+        data={
+            'startupData':startupData,
+            'startupData2':startupData2,
+            'startupData3':startupData3
         }
         return render(request,"startupDashboard.html",data)
 
