@@ -10,4 +10,5 @@ urlpatterns = [
     path('applyForFundrising/', views.applyForFundrisingViews, name="applyForFundrising"),
     path('monthlyRevenue/', views.monthlyRevenueViews, name="monthlyRevenue"),
     path('startupList/', views.startupList, name="startupList"),
+    path('fundingList/', views.funding_details, name="funding"),
 ]

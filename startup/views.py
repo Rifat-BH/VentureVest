@@ -1,11 +1,11 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.http import HttpResponseRedirect
 from auths.models import Auts
 from startup.models import startupBasicInfo
 from backupStartupDB.models import startupBasicInfo2, applyForFundrising, monthlyRevenue
-
-
+from  investor.models import Invest
+from backupStartupDB.models import startupBasicInfo2
 # Create your views here.
 def startupInfo(request):
     id = request.session['id']
@@ -120,3 +120,16 @@ def startupDetailsViews(request,id):
         'rec_id' : id,
     }
     return render(request,"startupDetails.html",data)
+
+def funding_details(request):
+    id = request.session['id']
+    nameQ = startupBasicInfo2.objects.get(user_id_id = id)
+    name = nameQ.companyName
+    inv_data = Invest.objects.select_related('user_id').filter(company_name = name)
+    print(inv_data)
+    ln = []
+    for n in inv_data:
+        na = n.user_id.full_name
+        ln.append(na)
+    
+    return JsonResponse({'data' : list(inv_data.values()), 'i_name' : ln})

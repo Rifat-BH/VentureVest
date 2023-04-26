@@ -71,9 +71,12 @@
             <a class="nav-link" aria-current="page" href="/adminControl/home/">Home</a>
           </li>
           {% endif %}
+
+          {% if request.session.catagory == 'investor' %}
           <li class="nav-item">
             <a class="nav-link" href="/startup/startupList/">Invest</a>
           </li>
+          {% endif %}
           <li class="nav-item">
             <a class="nav-link" href="/community/posts">Community</a>
           </li>
