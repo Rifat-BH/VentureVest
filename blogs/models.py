@@ -8,5 +8,6 @@ class blogs(models.Model):
     user_id = models.ForeignKey(Auts,blank = True, null = True, on_delete= models.CASCADE)
     name = models.CharField (max_length=100)
     title = models.CharField (max_length=100)
-    description = models.CharField (max_length=1000)
+    description = models.CharField (max_length=5000)
+    image = models.ImageField(default="")
     date = models.DateTimeField(default=datetime.now())

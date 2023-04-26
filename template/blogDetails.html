@@ -2,5 +2,14 @@
 
 {% block contant %}
 
+<div class="container p-4" style="text-align: center;">
+    <img src="{{ blog.image.url }}" alt="" style="height: 300px;" /> <br>
+    <h4 class="pt-5">{{ blog.title }}</h4>
+</div>
+<div class="container">
+    <p><b>By: {{ blog.name }}</b></p> 
+    <p>{{ blog.date }}</p><br>
+    <p>{{ blog.description }}</p>
 
+</div>
 {% endblock %}

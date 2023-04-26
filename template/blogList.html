@@ -2,9 +2,67 @@
 
 {% block contant %}
 
+<head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+       
+
+        .card-container {
+            margin: 20px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            width: 500px;
+            height: auto;
+            overflow: hidden;
+            text-overflow: clip;
+            position: relative;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 4px;
+            padding: 10px;
+            transition: all .3s ease-in;
+        }
+
+
+       
+
+        .card .card-title {
+            padding: 10px 5px;
+            font-size: 1.5rem;
+            text-shadow: 1px 0px 2px #262654;
+        }
+
+        .card:hover {
+            background: #dde3ed;
+            color: #000000;
+
+        }
+
+        .card .card-text {
+            line-height: 20px;
+            font-size: 400;
+        }
+    </style>
+</head>
+
 <div class="container">
     <div class="container p-4" style="text-align: center;">
         <!-- Button trigger modal -->
+        <h4>Share your Thoughts!</h4>
         <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Write a Blog!
         </button>
@@ -39,6 +97,28 @@
 
 
 
+<div class="card-container">
+    {% for blog in  blog %}
+    <div class="card">
+        <div class="card-image">
+            <img src="{{ blog.image.url }}" alt="" style="height:200px; width:490px; 
+            background-position: center center;
+            background-size: cover;" />
+        </div>
+        <div class="card-title">{{blog.title}}</div>
+        
+        <div class="card-text">
+            <b>By: {{blog.name}}</b> <br> <p>{{blog.date}}</p> <br>
+            <p style="height:150px; overflow: hidden;
+            text-overflow: ellipsis;">{{blog.description}}... </p>
+            <!-- {% comment %} <a href="{% url 'startupDetails' %}?id={{st2.user_id_id}}" class="btn"> <b>More details</b></a>   {% endcomment %} -->
+            <a href="/blogs/blogDetails/{{blog.id}}" class="btn"> <b>More details</b></a>  
+
+        </div>
+        
+    </div>
+    {% endfor %}
+</div>
 
 
 
