@@ -28,6 +28,7 @@ urlpatterns = [
     path('chat/', include('chatapp.urls')),
     path('community/', include('community.urls')),
     path('adminControl/', include('adminControl.urls')),
+    path('blogs/', include('blogs.urls')),
 ]
 
 if settings.DEBUG:  

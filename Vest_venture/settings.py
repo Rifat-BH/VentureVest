@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "community",
     "backupStartupDB",
     "adminControl",
+    "blogs",
 
 ]
 

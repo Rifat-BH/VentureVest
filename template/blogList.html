@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block contant %}
+
+<div class="container">
+    <div class="container p-4" style="text-align: center;">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Write a Blog!
+        </button>
+    </div>
+    
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Share your knowledge!</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{% url 'blogPost' %}" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <label for="title"><b>Title</b></label>
+                            <input type="text" name="title" class="form-control" placeholder="">
+                            <label for="details"><b>Details</b></label> <br>
+                            <textarea class="form-control" name="details" id="details" cols="30" rows="18"></textarea>
+                            <div class="input-group">
+                                <label class="input-group-text" for="image">Blog Image.</label>
+                                <input type="file"  class="form-control" name="image" id="image" />
+                              </div>
+                            <button type="submit" value="post" name="post" class="btn btn-dark">Post</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
