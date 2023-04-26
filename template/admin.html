@@ -28,8 +28,8 @@
                 <td><a href="/media/{{approve.bin}}" target="_blank">{{approve.bin}}</a></td>
                 <td><a href="/media/{{approve.licence}}" target="_blank">{{approve.licence}}</a></td>
                 <td><a href="/startup/startupDetails/{{approve.user_id_id}}" class="btn btn-dark"> <b> Details</b></a></td>
-                <td><button class="btn btn-success">Approval</button> </td>
-                <td><button class="btn btn-danger">Deny</button> </td>
+                <td><a href="/adminControl/adminApproval/{{approve.user_id_id}}" class="btn btn-success"> <b> Approve</b></a></td>
+                <td><a href="/adminControl/adminDeny/{{approve.user_id_id}}" class="btn btn-danger"> <b> Deny</b></a></td>
               </tr>
           {% endfor %}
         </tbody>

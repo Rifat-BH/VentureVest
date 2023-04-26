@@ -100,7 +100,7 @@ def startupDashboard (request):
 
 
 def startupList (request):
-    startupData2 =  applyForFundrising.objects.all()
+    startupData2 =  applyForFundrising.objects.filter(status =1)
     data ={
         'startupData2' : startupData2
     }
