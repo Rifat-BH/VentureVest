@@ -7,7 +7,7 @@ class startupAdmin2(admin.ModelAdmin):
 admin.site.register(startupBasicInfo2,startupAdmin2)
 
 class startupApplyForFundrisingAdmin(admin.ModelAdmin):
-    list_display=('user_id','name','duration','investment','Repayments','description','image','vat','bin','licence','revenue','gross_margin','mrr','cac','burn_rate')
+    list_display=('user_id','name','duration','investment','Repayments','description','image','vat','bin','licence','revenue','gross_margin','mrr','cac','burn_rate','status')
 admin.site.register(applyForFundrising,startupApplyForFundrisingAdmin)
 
 class monthlyRevenueAdmin(admin.ModelAdmin):

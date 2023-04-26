@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "chatapp",
     "community",
     "backupStartupDB",
+    "adminControl",
 
 ]
 

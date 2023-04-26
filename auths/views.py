@@ -30,9 +30,13 @@ def login(request):
                     return HttpResponseRedirect(url)
                     # return HttpResponse("Startup")
                 elif data['catagory'] == 'admin':
+                    userid = int(data['id'])
+                    request.session['id']  = userid
+                    url = "/adminControl/home/?user_id={}".format(userid)
+                    return HttpResponseRedirect(url)
                     # url = "/admin/home/?user_id={}".format(userdata.id)
                     # return HttpResponseRedirect(url)
-                    return HttpResponse("Startup")
+                    # return HttpResponse("Startup")
             else:
                 return HttpResponseRedirect("login")
 

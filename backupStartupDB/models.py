@@ -26,6 +26,7 @@ class applyForFundrising(models.Model):
     mrr = models.IntegerField()
     cac = models.IntegerField()
     burn_rate = models.IntegerField()
+    status = models.IntegerField(default=0)
     
 class monthlyRevenue(models.Model):
     user_id = models.ForeignKey(Auts,blank = True, null = True, on_delete= models.CASCADE)
