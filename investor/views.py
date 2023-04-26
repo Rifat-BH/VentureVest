@@ -32,7 +32,6 @@ def get_data_graph1(request):
     id = request.session['id']
     g_data = Invest.objects.filter(user_id = id).annotate(month=TruncMonth('date')).values('month').annotate(total=Sum('invest_ammount')).values('month','total') 
     return JsonResponse({'g_data' : list(g_data)})
-
 def investData(request):
     u_id = request.session['id']
     if request.method == "POST":

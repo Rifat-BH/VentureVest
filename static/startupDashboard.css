@@ -23,7 +23,7 @@ table{
 
 
 .div1{
-    background-color: #0a4275;
+    background-color: azure;
     color: black;
     border-radius: 5px;
     height: 120px;
@@ -33,7 +33,7 @@ table{
 }
 
 .div2{
-    background-color: #0a4275;
+    background-color: azure;
     color: black;
     border-radius: 5px;
     height: 120px;
@@ -43,7 +43,7 @@ table{
     text-align: center;
 }
 .div3{
-    background-color: #0a4275;
+    background-color: azure;
     color: black;
     border-radius: 5px;
     height: 120px;
@@ -54,11 +54,10 @@ table{
 }
 
 button{
-    background-color: #0a4275;
+    background-color: azure;
     height: 50px;
     width: 100px;
     border-radius: 10px;
-    margin: 2px;
 }
 
 .btncng{

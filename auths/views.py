@@ -18,21 +18,31 @@ def login(request):
             if data['password'] == password:
                 if data['catagory'] == 'investor' :
                     userid = int(data['id'])
+                    cat = data['catagory']
                     request.session['id']  = userid
+                    request.session['catagory']  = cat
                     # url = "/investor/home/?id={}".format(userid)
                     url = "/investor/home/"
                     return HttpResponseRedirect(url)
                     # return HttpResponse("Investor")
                 elif data['catagory'] == 'startup':
                     userid = int(data['id'])
+                    cat = data['catagory']
                     request.session['id']  = userid
+                    request.session['catagory']  = cat
                     url = "/startup/home/"
                     return HttpResponseRedirect(url)
                     # return HttpResponse("Startup")
                 elif data['catagory'] == 'admin':
+                    userid = int(data['id'])
+                    cat = data['catagory']
+                    request.session['id']  = userid
+                    request.session['catagory']  = cat
+                    url = "/adminControl/home/?user_id={}".format(userid)
+                    return HttpResponseRedirect(url)
                     # url = "/admin/home/?user_id={}".format(userdata.id)
                     # return HttpResponseRedirect(url)
-                    return HttpResponse("Startup")
+                    # return HttpResponse("Startup")
             else:
                 return HttpResponseRedirect("login")
 

@@ -1,0 +1,223 @@
+{% extends 'base.html' %}
+
+{% block contant %}
+
+<style>
+  .form-control,
+  .input-group-text {
+    margin-bottom: 10px;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+  }
+
+  header {
+    background-color: #e2e2e2;
+    color: rgb(3, 3, 3);
+    padding: 10px;
+    text-align: center;
+  }
+
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  #key-numbers {
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-gap: 20px;
+  }
+
+  .number {
+    background: #e2e2e2;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .number h6 {
+    margin-top: 0;
+  }
+
+  #fundraising {
+    margin-top: 50px;
+  }
+
+  #chart {
+    height: 300px;
+    background-color: #f1f1f1;
+  }
+
+  button {
+    background-color: #0a4275;
+    height: 50px;
+    width: 100px;
+    border-radius: 10px;
+    margin: 2px;
+  }
+
+  .btncng {
+    margin-top: 10px;
+    height: 50px;
+    width: 100px;
+    border-radius: 5px;
+  }
+</style>
+
+<body>
+  <header>
+    <h1>{{ startupData.companyName }}</h1>
+    <i class="fa fa-map-marker"></i>
+    <label for="location">{{ startupData.companyAddress }}</label> <br /> <br>
+    <div class="row" style="text-align: center;">
+      <div class="col-4"></div>
+      <div class="col-4">
+        <p>{{ startupData.companyDescription }}</p>
+      </div>
+      <div class="col-4"></div>
+    </div>
+  </header>
+  <div class="container p-5">
+    <div class="row">
+      <div class="col-md ">
+        <img src="{{ startupData2.image.url }}" alt="" style="border-radius: 10px; width:100%;" />
+      </div>
+      <div class="col-md pt-5">
+        <h6>Product name: <b> {{ startupData2.name }}</b> </h6>
+        <hr>
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <th scope="row">Duration of fundraising</th>
+              <td>{{ startupData2.duration }} Months</td>
+            </tr>
+            <tr>
+              <th scope="row">Min. Investment</th>
+              <td>{{ startupData2.investment }} tk.</td>
+            </tr>
+            <tr>
+              <th scope="row">Projected ROI</th>
+              <td colspan="2">{{ startupData2.roi }}%</td>
+            </tr>
+            <tr>
+              <th scope="row">Repayments</th>
+              <td colspan="2">{{ startupData2.Repayments }} Installment</td>
+            </tr>
+          </tbody>
+        </table>
+        <hr>
+        <h6> <b>Overview </b></h1>
+          <label for="text">{{ startupData2.description }}</label>
+
+          <p>
+            <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button"
+              aria-expanded="false" aria-controls="collapseExample">
+              Link with href
+            </a>
+            
+          </p>
+          <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+              
+              <form action="{% url 'send_mag_dt' %}" method="post">
+                {% csrf_token %}
+                    <input type="hidden" name="s_id" id="s_id" value="{{s_id}}">
+                    <input type="hidden" name="rec_id" id="rec_id" value="{{rec_id}}">
+                    <div class="row">
+                        <div class="col-9">
+                            <textarea class="form-control" placeholder="Aa" id="message" name="message"></textarea>
+                        </div>
+                        <div class="col-3" style="margin-top: 10px;">
+                            <button type="submit" id="submit" class="btn btn-primary">Send</button>
+                        </div>
+                    </div>
+              </form>
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <div class="right">
+
+    </div>
+  </div>
+  <!-- Modal -->
+  <main>
+    <section id="key-numbers">
+      <div class="number">
+        <h6> <b>Revenue </b> </h6>
+        <p>{{ startupData2.revenue }} tk.</p>
+      </div>
+      <div class="number">
+        <h6><b>Gross Margin </b> </h6>
+        <p>{{ startupData2.gross_margin }}%</p>
+      </div>
+      <div class="number">
+        <h6><b>Monthly Recurring Revenue (MRR) </b> </h6>
+        <p>{{ startupData2.mrr }} tk.</p>
+      </div>
+      <div class="number">
+        <h6><b>Customer Acquisition Cost </b> </h6>
+        <p>{{ startupData2.cac }} tk.</p>
+      </div>
+      <div class="number">
+        <h6><b>Burn Rate </b> </h6>
+        <p>{{ startupData2.burn_rate }} tk.</p>
+      </div>
+    </section>
+
+    <hr>
+    <h2>Monthly Revenue</h2>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Revenue</th>
+          <th scope="col">Profit</th>
+          <th scope="col">Month</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for st3 in startupData3 %}
+        <tr>
+          <th scope="row">{{ forloop.counter }}</th>
+          <td>{{ st3.currentRevenue}}</td>
+          <td>{{ st3.currentProfit}}</td>
+          <td>{{ st3.month}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </main>
+
+  <section class="m-5">
+    <div class="d-grid gap-2 d-md-block">
+      <button style="background-color: #0a4275; color:white; border:1px solid black">৳ 150,000</button>
+      <button style="background-color: #0a4275; color:white; border:1px solid black">৳ 100,000</button>
+      <button style="background-color: #0a4275; color:white; border:1px solid black">৳ 750,000</button>
+      <button style="background-color: #0a4275; color:white; border:1px solid black">৳ 50,000</button>
+    </div>
+    <form action="{% url 'invest' %}" method="post">
+      {% csrf_token %}
+      <input type="number" name="ammount" id="" class="btncng">
+      <input type="hidden" name="com_name" value="{{ startupData.companyName }}">
+      <input type="hidden" name="roi" value="{{ startupData2.roi }}">
+      <button type="submit" style="background-color: #0a4275; color:white; border:1px solid black">Invest</button>
+    </form>
+  </section>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+    integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
+{% endblock %}

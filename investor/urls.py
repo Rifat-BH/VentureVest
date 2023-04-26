@@ -6,5 +6,4 @@ urlpatterns = [
     path('home/get_tabledata/', views.get_data_table, name="investor-home"),
     path('home/get_graph1data/', views.get_data_graph1, name="investor-home"),
     path('home/post_invest_data/', views.investData, name="invest"),
-
 ]
