@@ -3,10 +3,13 @@ from django.http import HttpResponse, JsonResponse
 from django.http import HttpResponseRedirect
 from auths.models import Auts
 from startup.models import startupBasicInfo
-from backupStartupDB.models import startupBasicInfo2, applyForFundrising, monthlyRevenue
+from backupStartupDB.models import startupBasicInfo2, applyForFundrising, monthlyRevenue, profit
+
 from  investor.models import Invest
 from backupStartupDB.models import startupBasicInfo2
-from django.db.models import Sum,Count
+from django.db.models import Sum,Count, Q
+import math
+from datetime import date
 # Create your views here.
 def startupInfo(request):
     id = request.session['id']
@@ -171,8 +174,47 @@ def funding_details(request):
     inv_data = Invest.objects.select_related('user_id').filter(company_name = name)
     print(inv_data)
     ln = []
+    lid = []
     for n in inv_data:
         na = n.user_id.full_name
+        id = n.user_id.id
+        lid.append(id)
         ln.append(na)
     
-    return JsonResponse({'data' : list(inv_data.values()), 'i_name' : ln})
+    return JsonResponse({'data' : list(inv_data.values()), 'i_name' : ln, 'i_id' : lid})
+
+def return_profit(request):
+    if request.method == 'POST' :
+        id = request.POST.get('s_id')
+        i_id = request.POST.get('i_id')
+        installment = request.POST.get('installment')
+        roi = request.POST.get('roi')
+        comment = request.POST.get('comment')
+    c_idQ = startupBasicInfo2.objects.get(user_id_id = id)
+    c_name = c_idQ.companyName
+    amQ = Invest.objects.filter(Q(user_id_id = i_id) & Q(company_name = c_name)).annotate(c = Count("id")).values("c").annotate(total_amnt = Sum("invest_ammount")).values("total_amnt")
+    roiInt = (int(roi)/100)+1
+    installmentInt = int(installment)
+    ammount = 0
+    for a in amQ:
+        ammount += int(a['total_amnt'])
+    print(ammount)
+    
+    pay_ammount = (ammount*roiInt)/installmentInt
+    data = {
+        'com_id' : i_id,
+        'ammount' : math.ceil(pay_ammount),
+        'roi' : comment,
+    }
+    return render(request, 'paymentGatewat.html', data)
+
+def return_profit_save_db(request):
+    st_ids = request.session['id']
+    if request.method == 'POST':
+        comment = request.POST.get('roi')
+        inv_id = request.POST.get('com_id') 
+        ammount = request.POST.get('amount') 
+        print(st_ids)
+    sprofit = profit(st_id_id=st_ids, ammount=ammount, inv_id_id=inv_id, comments=comment)
+    sprofit.save()
+    return HttpResponse('ok')

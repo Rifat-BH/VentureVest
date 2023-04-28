@@ -11,4 +11,7 @@ urlpatterns = [
     path('monthlyRevenue/', views.monthlyRevenueViews, name="monthlyRevenue"),
     path('startupList/', views.startupList, name="startupList"),
     path('fundingList/', views.funding_details, name="funding"),
+    path('return-profit/', views.return_profit, name="return-profit"),
+    path('return-profit-db/', views.return_profit_save_db, name="returnProfit"),
+   
 ]

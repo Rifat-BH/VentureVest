@@ -1,5 +1,5 @@
 from django.contrib import admin
-from backupStartupDB.models import startupBasicInfo2, applyForFundrising, monthlyRevenue
+from backupStartupDB.models import startupBasicInfo2, applyForFundrising, monthlyRevenue, profit
 
 # Register your models here.
 class startupAdmin2(admin.ModelAdmin):
@@ -13,3 +13,7 @@ admin.site.register(applyForFundrising,startupApplyForFundrisingAdmin)
 class monthlyRevenueAdmin(admin.ModelAdmin):
     list_display=('user_id','month','currentRevenue','currentProfit')
 admin.site.register(monthlyRevenue,monthlyRevenueAdmin)
+
+class ProfitAdmin(admin.ModelAdmin):
+    list_display=('st_id','ammount','inv_id','comments', 'date')
+admin.site.register(profit,ProfitAdmin)

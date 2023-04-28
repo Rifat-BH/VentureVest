@@ -6,8 +6,12 @@
 			<div class="col-md-6 offset-md-3"> 
 				<h1 style="text-align: center;">Payment Gateway</h1> <hr>
                 <img src="https://w7.pngwing.com/pngs/32/363/png-transparent-visa-master-card-and-american-express-mastercard-payment-visa-credit-card-emv-credit-card-visa-and-master-card-background-text-display-advertising-logo.png" style="width: 100%;" alt="">
-    
+
+				{% if request.session.catagory == 'investor' %}
 				<form style="font-weight: bold;" method="post" action="{% url 'invest' %}">
+				{% else %}
+				<form style="font-weight: bold;" method="post" action="{% url 'returnProfit' %}">
+				{% endif %}
 					{% csrf_token %}
 					<div class="form-group">
 						<label for="cardNumber">Card Number</label>

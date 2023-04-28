@@ -278,6 +278,45 @@
   </tbody>
 </table>
 
+<!-- Profit Return: -->
+
+<!-- modal -->
+
+<!-- Button trigger modal -->
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#example" id="profit">
+  Profit Return
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="example" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel2">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'return-profit' %}" method="post">
+          {% csrf_token %}
+          <select class="form-select" aria-label="Default select example" name="i_id" id="investor_list">
+            <option value="1">One</option>
+          </select>
+          <input type="text" name="comment" id="" required>
+          <input type="hidden" name="roi" value="{{ startupData2.roi }}">
+          <input type="hidden" name="installment" value = "{{ startupData2.Repayments }}">
+          <input type="hidden" name="s_id" value = "{{ request.session.id }}">
+          <button type="submit" class="btn btn-primary">Payment</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
 
     <hr>
     <section id="fundraising">
@@ -328,8 +367,20 @@
           },
         })
       }, 1000)
-        
-0
+    $("#profit").click(function(){
+      $.ajax({
+        type : 'GET',
+        url : '/startup/fundingList/',
+        success : function(response){
+          // console.log(response)
+          $("#investor_list").empty()
+          for(i in response.i_name){
+            let temp = '<option value="'+ response.i_id[i]+'">'+response.i_name[i] +'</option>'
+            $("#investor_list").append(temp);
+          }
+        },
+      })
+    });
     });
   </script>
   {% endblock %}
