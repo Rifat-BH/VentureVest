@@ -7,6 +7,7 @@ from django.db.models.functions import TruncMonth
 from backupStartupDB.models import monthlyRevenue,startupBasicInfo2
 from datetime import date
 from django.db.models.functions import ExtractMonth
+from backupStartupDB.models import profit
 # Create your views here.
 def home(request):
     # profile = Auts.objects.filter(id = investor_id).values()
@@ -93,4 +94,21 @@ def get_data_graph2_ajax(request,cid):
         'g2_data' : list(revQ)
     }
     
+    return JsonResponse(data)
+def profit_table(request):
+    id = request.session['id']
+
+    qury = profit.objects.filter(inv_id_id = id).values()
+
+    c_nameList = []
+    for n in qury:
+        st_id = n['st_id_id']
+        cnameQ = startupBasicInfo2.objects.get(user_id_id = st_id)
+        c_name = cnameQ.companyName
+        c_nameList.append(c_name)
+    print(c_name)
+    data ={
+        't_data' : list(qury),
+        'cname' : c_nameList,
+    }
     return JsonResponse(data)

@@ -205,24 +205,30 @@
 <br><br>
 
 <!-- show startup progress -->
-<!-- <div class="container justify-content-center">
-  <div class="row m-3">
-    <form action="" method="post">
-      <label for="">
-        <h4>Select Company</h4>
-      </label>
-      <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="comlist">
-        {% comment %} {% for cname in com_name %}
-        <option value="{{cname.company_name}}">{{cname.company_name}}</option>
-        {% endfor %} {% endcomment %}
-      </select>
-    </form>
-  </div>
-
-  <div class="row m-auto">
-    <div id="chart_div"></div>
-  </div>
-</div> -->
+<h2>Profit Return</h2>
+      <p>Profit Return from Investment</p>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Startup Name</th>
+      <th scope="col">profit Ammount</th>
+      <th scope="col">Comment</th>
+      <th scope="col">Date</th>
+    </tr>
+  </thead>
+  <tbody id = "fundingTable">
+    <!-- {% for st3 in startupData3  %}
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+    {% endfor %} -->
+  </tbody>
+</table>
 <br>
 <br>
 {% endblock %}
@@ -256,16 +262,24 @@
         }
       });
     }, 1000);
-    // $.ajax({
-    //   type : 'GET',
-    //   url: "get_tabledata/?id=" + u_id,
-    //     success: function (response) {
-    //       for(i in response.t_data){
-    //         var temp2 = "<option value=" + response.t_data[i].company_name + ">" + response.t_data[i].company_name + "</option>"
-    //         $("#comlist").append(temp2)
-    //       }
-    //     },
-    // });
+    setInterval(function(){
+      $.ajax({
+      type : 'GET',
+      url: '/investor/profit-table',
+        success: function (response) {
+          console.log(response)
+          $("#fundingTable").empty()
+          let j=1
+          for(i in response.t_data){
+            
+            var temp2 = '<tr><td>' + j +'</td><td>' +response.cname[i]+ '</td><td>' + response.t_data[i].ammount+ '</td><td>'+response.t_data[i].comments+'</td><td>'+response.t_data[i].date+'</td></tr>'
+            $("#fundingTable").append(temp2)
+            j++;
+          }
+        },
+    });
+    },1000);
+    
 
   });
 </script>

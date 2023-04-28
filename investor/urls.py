@@ -9,4 +9,5 @@ urlpatterns = [
     path('company_rev_details/<cname>', views.get_data_graph2, name="see_details"),
     path('company_rev_details-ajax/<cid>', views.get_data_graph2_ajax, name="see_details_ajax"),
     path('payment/', views.payment, name="payment-gateway"),
+    path('profit-table/', views.profit_table, name="profit-table"),
 ]
