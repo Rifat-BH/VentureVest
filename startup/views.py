@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.http import HttpResponseRedirect
 from auths.models import Auts
 from startup.models import startupBasicInfo
 from backupStartupDB.models import startupBasicInfo2, applyForFundrising, monthlyRevenue, profit
+from django.contrib import messages
+from django.utils.translation import get_language
 
 from  investor.models import Invest
 from backupStartupDB.models import startupBasicInfo2
@@ -218,3 +220,4 @@ def return_profit_save_db(request):
     sprofit = profit(st_id_id=st_ids, ammount=ammount, inv_id_id=inv_id, comments=comment)
     sprofit.save()
     return HttpResponseRedirect('/startup/home/')
+

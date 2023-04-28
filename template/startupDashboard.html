@@ -17,7 +17,7 @@
   }
 
   header {
-    background-color: #e2e2e2;
+    background-color: #efefef;
     color: rgb(3, 3, 3);
     padding: 10px;
     text-align: center;
@@ -34,10 +34,11 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     grid-gap: 20px;
+    
   }
 
   .number {
-    background:  #e2e2e2;
+    background:  #ffffff;
     border-radius: 5px;
     padding: 10px;
     text-align: center;
@@ -72,13 +73,17 @@
     <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
       Apply for Fundraising
     </button>
+    <a class="btn btn-outline-dark" href="/startup/deleteList/">
+      Remove from listing
+    </a>
+    
   </header>
 
   <!-- funding summary -->
   <div class="container my-3">
-    <div class="row">
-      <div class="col-sm-6">
-        <div class="card">
+    <div class="row justify-content-center">
+      <div class="col-sm-4">
+        <div class="card shadow-lg p-3 mb-2 bg-body rounded" style="background-color: #fff; border-bottom: 3px solid #ff00fb;">
           <div class="card-body text-center">
             <h5 class="card-title">Goal:</h5>
             <p class="card-text">{{startupData2.investment}}</p>
@@ -86,8 +91,8 @@
           </div>
         </div>
       </div>
-      <div class="col-sm-6">
-        <div class="card">
+      <div class="col-sm-4">
+        <div class="card shadow-lg p-3 mb-2 bg-body rounded" style="background-color: #fff; border-bottom: 3px solid #ff0000;">
           <div class="card-body text-center">
             <h5 class="card-title">Raised:</h5>
             <p class="card-text">{{totalInvest}}</p>
@@ -203,23 +208,23 @@
   </div>
   <main>
     <section id="key-numbers">
-      <div class="number">
+      <div class="number card shadow-lg p-3 mb-2 bg-body rounded" style="background-color: #fff; border-bottom: 3px solid #0099ff;">
         <h6> <b>Revenue </b> </h6>
         <p>{{ startupData2.revenue }} tk.</p>
       </div>
-      <div class="number">
+      <div class="number card shadow-lg p-3 mb-2 bg-body rounded" style="background-color: #fff; border-bottom: 3px solid #ff0000;">
         <h6><b>Gross Margin </b> </h6>
         <p>{{ startupData2.gross_margin }}%</p>
       </div>
-      <div class="number">
+      <div class="number card shadow-lg p-3 mb-2 bg-body rounded" style="background-color: #fff; border-bottom: 3px solid #44ff00;">
         <h6><b>Monthly Recurring Revenue (MRR) </b> </h6>
         <p>{{ startupData2.mrr }} tk.</p>
       </div>
-      <div class="number">
+      <div class="number card shadow-lg p-3 mb-2 bg-body rounded" style="background-color: #fff; border-bottom: 3px solid #ffd900;">
         <h6><b>Customer Acquisition Cost </b>  </h6>
         <p>{{ startupData2.cac }} tk.</p>
       </div>
-      <div class="number">
+      <div class="number card shadow-lg p-3 mb-2 bg-body rounded" style="background-color: #fff; border-bottom: 3px solid #f200ff;">
         <h6><b>Burn Rate </b> </h6>
         <p>{{ startupData2.burn_rate }} tk.</p>
       </div>
@@ -284,9 +289,10 @@
 
 <!-- Button trigger modal -->
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#example" id="profit">
+<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#example" id="profit">
   Profit Return
 </button>
+<p>Return profit to the investors</p>
 
 <!-- Modal -->
 <div class="modal fade" id="example" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

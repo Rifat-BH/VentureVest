@@ -77,7 +77,7 @@
             </nav>
 
             <div class="container" id="chat-body">
-                <div class="recever">
+                {% comment %} <div class="recever">
                     Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officia odit ad eaque! Illum,
                     molestias saepe.
                 </div>
@@ -93,7 +93,7 @@
 
                 <div class="recever">
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                </div>
+                </div> {% endcomment %}
 
 
 
@@ -154,7 +154,7 @@
                     for (i in response.msg_data) {
                         // console.log(response.msg_data[i].msgg);
                         if (response.msg_data[i].s_id_id == s) {
-                            let temp = '<div class="sender">' + response.msg_data[i].msgg + '</div>';
+                            let temp = '<div class="sender" style="color:white;">' + response.msg_data[i].msgg + '</div>';
                             $("#chat-body").append(temp);
                         }
                         else {

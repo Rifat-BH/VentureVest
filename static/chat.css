@@ -11,6 +11,7 @@
 
 .sender {
     background-color: rgb(41, 127, 240);
+    color: white;
     border-radius: 20px;
     padding: 10px;
     float: right;
