@@ -13,5 +13,6 @@ urlpatterns = [
     path('fundingList/', views.funding_details, name="funding"),
     path('return-profit/', views.return_profit, name="return-profit"),
     path('return-profit-db/', views.return_profit_save_db, name="returnProfit"),
-   
+    path('deleteList/', views.deleteList, name="deleteList"),
+
 ]

@@ -221,3 +221,8 @@ def return_profit_save_db(request):
     sprofit.save()
     return HttpResponseRedirect('/startup/home/')
 
+def deleteList(request):
+    id = request.session['id']
+    applyForFundrising.objects.filter(user_id_id = id).update(status = 2)
+    messages.info(request, 'Your listing has been removed!')
+    return redirect(request.META.get('HTTP_REFERER'))
