@@ -217,4 +217,4 @@ def return_profit_save_db(request):
         print(st_ids)
     sprofit = profit(st_id_id=st_ids, ammount=ammount, inv_id_id=inv_id, comments=comment)
     sprofit.save()
-    return HttpResponse('ok')
+    return HttpResponseRedirect('/startup/home/')
