@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from auths.models import Auts
 from investor.models import Invest
 from django.db.models import Count,Sum,Avg
@@ -38,17 +38,36 @@ def get_data_graph1(request):
     id = request.session['id']
     g_data = Invest.objects.filter(user_id = id).annotate(month=TruncMonth('date')).values('month').annotate(total=Sum('invest_ammount')).values('month','total') 
     return JsonResponse({'g_data' : list(g_data)})
+
 def investData(request):
     u_id = request.session['id']
     if request.method == "POST":
-        ammount = request.POST.get('ammount')
-        com_name = request.POST.get('com_name')
+        ammount = request.POST.get('amount')
+        com_id = request.POST.get('com_id')
         roi = request.POST.get('roi')
         today = date.today()
+        print(ammount)
+        nameQ = startupBasicInfo2.objects.get(user_id_id = com_id)
+        com_name = nameQ.companyName
+        print(com_name)
         new_investment = Invest(user_id_id = u_id, date = today, company_name = com_name,invest_ammount = ammount,returen_rate =roi)
         new_investment.save()
-        return redirect(request.META.get('HTTP_REFERER'))
-    
+
+        url = '/startup/startupDetails/{}'.format(com_id)
+        return HttpResponseRedirect(url)
+
+def payment(request):
+
+    if request.method == "POST":
+        com_id = request.POST.get('com_id')
+        ammount = request.POST.get('ammount')
+        roi = request.POST.get('roi')
+        data ={
+            'com_id' : com_id,
+            'ammount' : ammount,
+            'roi' : roi,
+        }
+        return render(request, 'paymentGatewat.html', data)   
 def get_data_graph2(request,cname):
     c_idQ = startupBasicInfo2.objects.get(companyName = cname)
     print(c_idQ.user_id_id)

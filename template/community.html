@@ -180,9 +180,11 @@
         success: function (response) {
           console.log(response.post_by_name);
           $("#post_list").empty();
+          $("#ncount").text(response.n_count);
           for(i in response.all_post){
             let temp ='  <div class="card my-2"><div class="card-header"><a href="#">'+response.post_by_name[i].post_by__full_name+'</a></div><div class="card-body"><h5 class="card-title"><a href="/community/post-details/'+response.all_post[i].id+'">'+response.all_post[i].post_title+'</a></h5><p class="card-text">'+response.all_post[i].post_des+'</p></div></div>'
             $("#post_list").append(temp)
+            
           }
           
         },
@@ -200,7 +202,12 @@
         url : '/community/notification/'+ u_id,
         success : function(response){
           $("#ncount").text(response.count);
+          $('#notf_body').empty()
           console.log(response.notif_data);
+          for(i in response.notif_data){
+            let temp = '<li><a class="dropdown-item" href="/community/post-details/' + response.notif_data[i].post_id+'">' +response.notif_data[i].notify+'</a></li>'
+            $('#notf_body').append(temp)
+          }
         } 
       })
     })

@@ -6,6 +6,7 @@ from startup.models import startupBasicInfo
 from backupStartupDB.models import startupBasicInfo2, applyForFundrising, monthlyRevenue
 from  investor.models import Invest
 from backupStartupDB.models import startupBasicInfo2
+from django.db.models import Sum,Count
 # Create your views here.
 def startupInfo(request):
     id = request.session['id']
@@ -82,19 +83,45 @@ def startupDashboard (request):
     if len(checkuser2) == 0:
         startupData =  startupBasicInfo2.objects.get(user_id_id = id)
         startupData2 =  applyForFundrising.objects.get(user_id_id = id)
+
+        c_name = startupData.companyName
+        totalInvest = Invest.objects.filter(company_name = c_name).annotate(c = Count("id")).values("c").annotate(total = Sum("invest_ammount")).values("total")
+        print(totalInvest)
+        goal = int(startupData2.investment)
+
+        if totalInvest[0]['total'] == None:
+            invAm = 0
+        else:
+            invAm = int(totalInvest[0]['total'])
+        procced = (invAm/goal) *100
         data={
             'startupData':startupData,
-            'startupData2':startupData2
+            'startupData2':startupData2,
+            'totalInvest' : invAm,
+            'proBar' : procced,
         }
         return render(request,"startupDashboard.html",data)
     else:
         startupData =  startupBasicInfo2.objects.get(user_id_id = id)
         startupData2 =  applyForFundrising.objects.get(user_id_id = id)
         startupData3 =  monthlyRevenue.objects.filter(user_id_id = id)
+
+        c_name = startupData.companyName
+        totalInvest = Invest.objects.filter(company_name = c_name).annotate(c = Count("id")).values("c").annotate(total = Sum("invest_ammount")).values("total")
+        print(totalInvest)
+        goal = int(startupData2.investment)
+
+        if totalInvest[0]['total'] == None:
+            invAm = 0
+        else:
+            invAm = int(totalInvest[0]['total'])
+        procced = (invAm/goal) *100
         data={
             'startupData':startupData,
             'startupData2':startupData2,
-            'startupData3':startupData3
+            'startupData3':startupData3,
+            'totalInvest' : invAm,
+            'proBar' : procced,
         }
         return render(request,"startupDashboard.html",data)
 
@@ -109,15 +136,31 @@ def startupList (request):
     
 def startupDetailsViews(request,id):
     uid = request.session['id']
+    invAm = 0
+
     startupData =  startupBasicInfo2.objects.get(user_id_id = id)
+    c_name = startupData.companyName
     startupData2 =  applyForFundrising.objects.get(user_id_id = id)
     startupData3 =  monthlyRevenue.objects.filter(user_id_id = id)
+    totalInvest = Invest.objects.filter(company_name = c_name).annotate(c = Count("id")).values("c").annotate(total = Sum("invest_ammount")).values("total")
+    print(totalInvest)
+    goal = int(startupData2.investment)
+
+    if totalInvest[0]['total'] == None:
+        invAm = 0
+    else:
+        invAm = int(totalInvest[0]['total'])
+    procced = (invAm/goal) *100
+    print(procced)
+
     data={
         'startupData':startupData,
         'startupData2':startupData2,
         'startupData3':startupData3,
         's_id' : uid,
         'rec_id' : id,
+        'totalInvest' : invAm,
+        'proBar' : procced,
     }
     return render(request,"startupDetails.html",data)
 

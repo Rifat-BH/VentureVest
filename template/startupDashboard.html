@@ -73,6 +73,40 @@
       Apply for Fundraising
     </button>
   </header>
+
+  <!-- funding summary -->
+  <div class="container my-3">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="card-title">Goal:</h5>
+            <p class="card-text">{{startupData2.investment}}</p>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="card-title">Raised:</h5>
+            <p class="card-text">{{totalInvest}}</p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row my-3">
+      <label for="">Raised: {{proBar | floatformat:2}}</label><br>
+      <div class="progress">
+        
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: {{ proBar }}%;"></div>
+
+      </div>
+      
+    </div>
+  </div>
+
   <div class="container p-5">
     <div class="row">
       <div class="col-md ">
@@ -260,17 +294,18 @@
             </tr>
           </thead>
           <tbody id = "fundingTable">
-            {% for st3 in startupData3  %}
+            <!-- {% for st3 in startupData3  %}
                 <tr>
                   <th scope="row">{{ forloop.counter }}</th>
                   <td>{{ st3.currentRevenue}}</td>
                   <td>{{ st3.currentProfit}}</td>
                   <td>{{ st3.month}}</td>
                 </tr>
-            {% endfor %}
+            {% endfor %} -->
           </tbody>
         </table>
       </div>
+      
     </section>
   </main>
   {% block ajax_script %}
@@ -283,7 +318,7 @@
           url : '/startup/fundingList/',
           success : function(response){
             $("#fundingTable").empty();
-            console.log(response.data)
+            // console.log(response.data)
             var j =1
             for(i in response.data){
               let temp = '<tr><th scope="row">' + (j) + '</th><td>'+response.i_name[i]+'</td><td>'+ response.data[i].invest_ammount +'</td><td>'+response.data[i].date+ '</td></tr>';
