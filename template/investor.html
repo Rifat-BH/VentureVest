@@ -94,6 +94,8 @@
 </script> -->
 {% endblock %}
 
+
+
 {% block contant %}
 <div class="container my-3">
   <h5>Name : {{name.full_name}}</h5>
@@ -205,20 +207,21 @@
 <br><br>
 
 <!-- show startup progress -->
-<h2>Profit Return</h2>
-      <p>Profit Return from Investment</p>
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Startup Name</th>
-      <th scope="col">profit Ammount</th>
-      <th scope="col">Comment</th>
-      <th scope="col">Date</th>
-    </tr>
-  </thead>
-  <tbody id = "fundingTable">
-    <!-- {% for st3 in startupData3  %}
+<div class="container">
+  <h2>Profit Return</h2>
+  <p>Profit Return from Investment</p>
+  <table class="table ">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Startup Name</th>
+        <th scope="col">profit Ammount</th>
+        <th scope="col">Comment</th>
+        <th scope="col">Date</th>
+      </tr>
+    </thead>
+    <tbody id="fundingTable">
+      <!-- {% for st3 in startupData3  %}
         <tr>
           <td></td>
           <td></td>
@@ -227,8 +230,9 @@
           <td></td>
         </tr>
     {% endfor %} -->
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</div>
 <br>
 <br>
 {% endblock %}
@@ -251,7 +255,7 @@
             // let x = response.t_data[i].date;
             // let arr = x.split("-")
             // console.log(arr[1]) ;
-            var temp = '<tr> <td>' + response.t_data[i].date + '</td> <td> <a href="/investor/company_rev_details/' + response.t_data[i].company_name +'" >'+ response.t_data[i].company_name + "</a></td> <td>" + response.t_data[i].invest_ammount + "</td> <td>" + response.t_data[i].returen_rate + "%</td> </tr>"
+            var temp = '<tr> <td>' + response.t_data[i].date + '</td> <td> <a href="/investor/company_rev_details/' + response.t_data[i].company_name + '" >' + response.t_data[i].company_name + "</a></td> <td>" + response.t_data[i].invest_ammount + "</td> <td>" + response.t_data[i].returen_rate + "%</td> </tr>"
             $("#tbody").append(temp)
             // var temp2 = "<option value=" + response.t_data[i].company_name + ">" + response.t_data[i].company_name + "</option>"
             // $("#comlist").append(temp2);
@@ -262,24 +266,24 @@
         }
       });
     }, 1000);
-    setInterval(function(){
+    setInterval(function () {
       $.ajax({
-      type : 'GET',
-      url: '/investor/profit-table',
+        type: 'GET',
+        url: '/investor/profit-table',
         success: function (response) {
           console.log(response)
           $("#fundingTable").empty()
-          let j=1
-          for(i in response.t_data){
-            
-            var temp2 = '<tr><td>' + j +'</td><td>' +response.cname[i]+ '</td><td>' + response.t_data[i].ammount+ '</td><td>'+response.t_data[i].comments+'</td><td>'+response.t_data[i].date+'</td></tr>'
+          let j = 1
+          for (i in response.t_data) {
+
+            var temp2 = '<tr><td>' + j + '</td><td>' + response.cname[i] + '</td><td>' + response.t_data[i].ammount + '</td><td>' + response.t_data[i].comments + '</td><td>' + response.t_data[i].date + '</td></tr>'
             $("#fundingTable").append(temp2)
             j++;
           }
         },
-    });
-    },1000);
-    
+      });
+    }, 1000);
+
 
   });
 </script>

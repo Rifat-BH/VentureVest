@@ -59,6 +59,7 @@
     </style>
 </head>
 
+{% if request.session.catagory == 'admin' %}
 <div class="container">
     <div class="container p-4" style="text-align: center;">
         <!-- Button trigger modal -->
@@ -94,7 +95,7 @@
             </div>
     </div>
 </div>
-
+{% endif%}
 
 
 <div class="card-container">
