@@ -9,32 +9,32 @@
   function drawChart() {
     var u_id = $("#userID").val();
     // setInterval(function(){
-      $.ajax({
-        type : 'GET',
-        url : "get_graph1data/?id="+u_id,
-        success : function(response){
-          var data_arr = [
-                          ['Month', 'Total'],
-                        ];
-          for(var i in response.g_data){
-              data_arr.push([(response.g_data[i].month), (response.g_data[i].total)])
-          }
-          console.log(data_arr);
-          var data = google.visualization.arrayToDataTable(data_arr);
-          var options = {
-            chart: {
-              title: 'Invest History',
-              subtitle: 'Total Invest per month',
-            },
-            bars: 'vertical', // Required for Material Bar Charts.
-            colors: ['#0e3253']
-          };
+    $.ajax({
+      type: 'GET',
+      url: "get_graph1data/?id=" + u_id,
+      success: function (response) {
+        var data_arr = [
+          ['Month', 'Total'],
+        ];
+        for (var i in response.g_data) {
+          data_arr.push([(response.g_data[i].month), (response.g_data[i].total)])
+        }
+        console.log(data_arr);
+        var data = google.visualization.arrayToDataTable(data_arr);
+        var options = {
+          chart: {
+            title: 'Invest History',
+            subtitle: 'Total Invest per month',
+          },
+          bars: 'vertical', // Required for Material Bar Charts.
+          colors: ['#0e3253']
+        };
 
         var chart = new google.charts.Bar(document.getElementById('barchart_material'));
 
         chart.draw(data, google.charts.Bar.convertOptions(options));
-        },
-      });
+      },
+    });
     // },300000);
 
     // var data = google.visualization.arrayToDataTable([
@@ -61,56 +61,40 @@
 
 </script>
 
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
-  google.charts.load('current', { 'packages': ['line'] });
-  google.charts.setOnLoadCallback(drawChart);
 
-  function drawChart() {
+
+  google.charts.load('current', { packages: ['corechart', 'line'] });
+  google.charts.setOnLoadCallback(drawBasic);
+
+  function drawBasic() {
 
     var data = new google.visualization.DataTable();
-    data.addColumn('number', 'Month-1');
-    data.addColumn('number', 'Month-2');
-    data.addColumn('number', 'Month-3');
-    data.addColumn('number', 'Month-4');
+    data.addColumn('number', 'X');
+    data.addColumn('number', 'Dogs');
 
     data.addRows([
-      [1, 37.8, 80.8, 41.8],
-      [2, 30.9, 69.5, 32.4],
-      [3, 25.4, 57, 25.7],
-      [4, 11.7, 18.8, 10.5],
-      [5, 11.9, 17.6, 10.4],
-      [6, 8.8, 13.6, 7.7],
-      [7, 7.6, 12.3, 9.6],
-      [8, 12.3, 29.2, 10.6],
-      [9, 16.9, 42.9, 14.8],
-      [10, 12.8, 30.9, 11.6],
-      [11, 5.3, 7.9, 4.7],
-      [12, 6.6, 8.4, 5.2],
-      [13, 4.8, 6.3, 3.6],
-      [14, 4.2, 6.2, 3.4]
+      [0, 0], [1, 10], [2, 23], [3, 17], [4, 18], [5, 9],
     ]);
 
     var options = {
-      chart: {
-        title: 'Company Performance',
-        subtitle: 'Last 6 Months Sell'
+      hAxis: {
+        title: 'Time'
       },
-      width: 950,
-      height: 400,
-      axes: {
-        x: {
-          0: { side: 'top' }
-        }
+      vAxis: {
+        title: 'Popularity'
       }
     };
 
-    var chart = new google.charts.Line(document.getElementById('line_top_x'));
+    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
 
-    chart.draw(data, google.charts.Line.convertOptions(options));
+    chart.draw(data, options);
   }
-</script>
+</script> -->
 {% endblock %}
+
+
 
 {% block contant %}
 <div class="container my-3">
@@ -209,9 +193,9 @@
               <th scope="col">Return Rate</th>
             </tr>
           </thead>
-          <tbody id ="tbody">
+          <tbody id="tbody">
             <tr>
-              
+
             </tr>
           </tbody>
         </table>
@@ -223,54 +207,84 @@
 <br><br>
 
 <!-- show startup progress -->
-<div class="container justify-content-center">
-  <div class="row m-3">
-    <form action="" method="post">
-      <label for="">
-        <h4>Select Company</h4>
-      </label>
-      <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="comlist">
-      </select>
-    </form>
-  </div>
-
-  <div class="row m-auto">
-    <div id="line_top_x" align="center"></div>
-  </div>
+<div class="container">
+  <h2>Profit Return</h2>
+  <p>Profit Return from Investment</p>
+  <table class="table ">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Startup Name</th>
+        <th scope="col">profit Ammount</th>
+        <th scope="col">Comment</th>
+        <th scope="col">Date</th>
+      </tr>
+    </thead>
+    <tbody id="fundingTable">
+      <!-- {% for st3 in startupData3  %}
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+    {% endfor %} -->
+    </tbody>
+  </table>
 </div>
 <br>
 <br>
 {% endblock %}
 
 
-{% block ajax_script %} 
+{% block ajax_script %}
 <script>
-  $(document).ready(function(){
+  $(document).ready(function () {
     var u_id = $("#userID").val();
     console.log(u_id)
-    setInterval(function(){
+    setInterval(function () {
       $.ajax({
         type: 'GET',
-        url : "get_tabledata/?id="+u_id,
-        success : function(response){
+        url: "get_tabledata/?id=" + u_id,
+        success: function (response) {
           // console.log(response)
           $("#tbody").empty();
           $("#comlist").empty();
-          for(var i in response.t_data){
+          for (var i in response.t_data) {
             // let x = response.t_data[i].date;
             // let arr = x.split("-")
             // console.log(arr[1]) ;
-            var temp = "<tr> <td>"+response.t_data[i].date+"</td> <td>"+response.t_data[i].company_name+"</td> <td>"+response.t_data[i].invest_ammount+"</td> <td>"+response.t_data[i].returen_rate+"%</td> </tr>"
+            var temp = '<tr> <td>' + response.t_data[i].date + '</td> <td> <a href="/investor/company_rev_details/' + response.t_data[i].company_name + '" >' + response.t_data[i].company_name + "</a></td> <td>" + response.t_data[i].invest_ammount + "</td> <td>" + response.t_data[i].returen_rate + "%</td> </tr>"
             $("#tbody").append(temp)
-            var temp2 = "<option value="+response.t_data[i].company_name+">"+response.t_data[i].company_name+"</option>"
-            $("#comlist").append(temp2);
+            // var temp2 = "<option value=" + response.t_data[i].company_name + ">" + response.t_data[i].company_name + "</option>"
+            // $("#comlist").append(temp2);
           }
         },
-        error : function(response){
+        error: function (response) {
           alert("error")
         }
       });
     }, 1000);
+    setInterval(function () {
+      $.ajax({
+        type: 'GET',
+        url: '/investor/profit-table',
+        success: function (response) {
+          console.log(response)
+          $("#fundingTable").empty()
+          let j = 1
+          for (i in response.t_data) {
+
+            var temp2 = '<tr><td>' + j + '</td><td>' + response.cname[i] + '</td><td>' + response.t_data[i].ammount + '</td><td>' + response.t_data[i].comments + '</td><td>' + response.t_data[i].date + '</td></tr>'
+            $("#fundingTable").append(temp2)
+            j++;
+          }
+        },
+      });
+    }, 1000);
+
+
   });
 </script>
 {% endblock %}

@@ -17,28 +17,23 @@
     <p>{{uid}}</p>
 </div>
 <div class="container" style=" text-align: center; width:40%;" >
-    <h1 >Describe your Product</h1>
+    <h1 >Basic information of your Company</h1>
     <hr>
     <form action="{% url 'startupHome' %}" method="post" enctype="multipart/form-data">
       {% csrf_token %}
-        <!-- <label class="form-label mt-2"><b>Name</b></label> -->
-        <input type="texttext" name="name" required class="form-control" placeholder="Name of your product">
-        <!-- <label class="form-label mt-3"><b>Duration</b></label> -->
-        <input type="number" name="duration" required class="form-control" placeholder="Duration (e.g. 11 Months)">
-        <!-- <label class="form-label mt-3"><b>Min. Investment</b></label> -->
+        <input type="texttext" name="companyName" required class="form-control" placeholder="Company Name">
+        <input type="texttext" name="companyAddress" required class="form-control" placeholder="Address">
+        <input type="texttext" name="companyDescription" required class="form-control" placeholder="Overview of your Company">
+
+        {% comment %} <input type="number" name="duration" required class="form-control" placeholder="Duration (e.g. 11 Months)">
         <input type="number" name="investment" required class="form-control" placeholder="Min. Investment (e.g. 10,000 tk)">
-        <!-- <label class="form-label mt-3"><b>Projected ROI</b></label> -->
         <input type="number" name="roi" required class="form-control" placeholder="Projected ROI (e.g. 15%)">
-        <!-- <label class="form-label mt-3"><b>Repayments</b></label> -->
         <input type="text" name="Repayments" required class="form-control" placeholder="Repayments (e.g. 4 installments)">
         
-          <!-- <label class="form-label mt-3"><b>Choose Image</b> </label> -->
           <div class="input-group">
             <label class="input-group-text" for="image">Product Image.</label>
             <input type="file" required class="form-control" name="image" id="image" />
           </div>
-          <!-- <input type="file" name="image" class="form-control"> -->
-          <!-- <label class="form-label mt-3"><b>Description </b> </label> -->
           <textarea class="form-control" name="description" required placeholder="Describe your product"  style="height: 100px"></textarea>
           <hr>
           <label for="input-group"> <b> Upload Some necessary documents</b> </label>
@@ -53,8 +48,8 @@
       <div class="input-group">
         <label class="input-group-text" for="licence">License.</label>
         <input type="file"  class="form-control" name="licence" id="licence" />
-      </div>
-      <button type="submit" class="btn btn-dark" >Post</button>
+      </div> {% endcomment %}
+      <button type="submit" class="btn btn-dark" >Save</button>
     </form>
     
   </div>

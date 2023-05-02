@@ -32,8 +32,11 @@ def posts_ajax(request):
     data ={
         'posts' : all_posts.values()
     }
+    user_id = request.session['id']
+    get_notifi = CommentNofity.objects.filter(Q(post_by_id = user_id) & Q(status=0)).values()
+    count_n = len(get_notifi)
     # return render(request,"community.html",data)
-    return JsonResponse({'all_post': list(all_posts.values()), 'post_by_name' : list(all_posts.values('post_by__full_name')) })
+    return JsonResponse({'all_post': list(all_posts.values()), 'post_by_name' : list(all_posts.values('post_by__full_name')), 'n_count' : count_n })
 
 def posts_des(request,post_id):
     post_ditls = CommunityPost.objects.get(id = post_id)
@@ -73,7 +76,7 @@ def postComment(request,post_id):
         return HttpResponseRedirect(url)
     
 def notify(request,user_id):
-    get_notifi = CommentNofity.objects.filter(Q(post_by_id = user_id) & Q(status=0)).values()
+    get_notifi = CommentNofity.objects.filter(Q(post_by_id = user_id) & Q(status=1)).values()
     count_n = len(get_notifi)
 
     set_seen = CommentNofity.objects.filter(post_by_id = user_id).update(status = 1)

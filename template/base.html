@@ -44,12 +44,11 @@
 <body>
   <nav class="navbar navbar-expand-lg" style="background-color: #0e3253;" id="home">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="#" style="color: white;">
         <img src="/static/a735187fbe0b6411fa837984bbef50d7.jpg" alt="Logo" width="40" height="40"
-          class="align-text-top m-0 p-0" style="border-radius: 50%;">
-        <span
-          style="color: rgb(255, 255, 255); font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 24px;">
-          Venture Vest </span>
+          class="align-text-top" style="border-radius: 50%;">
+        
+          Venture Vest 
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,29 +56,43 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0 col align-self-end">
+          {% if request.session.catagory == 'startup' %}
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/startup/home/">Home</a>
+          </li>
+          {% elif request.session.catagory == 'investor' %}
           <li class="nav-item">
             <a class="nav-link" aria-current="page" href="/investor/home/">Home</a>
           </li>
+          
+          {% else %}
           <li class="nav-item">
-            <a class="nav-link" href="#">Company</a>
+            <a class="nav-link" aria-current="page" href="/adminControl/home/">Home</a>
           </li>
+          {% endif %}
+
+          {% if request.session.catagory == 'investor' %}
           <li class="nav-item">
-            <a class="nav-link">Blogs</a>
+            <a class="nav-link" href="/startup/startupList/">Invest</a>
           </li>
+          {% endif %}
           <li class="nav-item">
             <a class="nav-link" href="/community/posts">Community</a>
           </li>
           <li class="nav-item">
+            <a href="/blogs/blogList" class="nav-link">Blogs</a>
+          </li>
+          {% if request.session.catagory == 'investor' or request.session.catagory == 'startup'%}
+          <li class="nav-item">
             <a href="/chat/startup" class="nav-link">Chat</a>
           </li>
+          {% endif %}
           <li class="nav-item">
             <a href="/logout/signout/" class="nav-link">Logout</a>
           </li>
         </ul>
-        <!-- <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form> -->
+        {% block search%} {% endblock %}
+        
       </div>
     </div>
   </nav>
@@ -92,18 +105,6 @@
 
   <footer class="text-center text-white" style="background-color: #0a4275;">
 
-    <div class="p-4 pb-0">
-
-      <section class="">
-        <p class="d-flex justify-content-center align-items-center">
-          <span class="me-3">Register for free</span>
-          <button type="button" class="btn btn-rounded" style="border: 1px solid white;">
-            <a href="#home" style="color:white; text-decoration: none;">Go Home!</a>
-          </button>
-        </p>
-      </section>
-
-    </div>
 
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
       © 2023 Copyright: All Rights Reserve By Venture-Vest.com <br>

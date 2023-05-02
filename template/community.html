@@ -25,8 +25,58 @@
   </div>
 </div>
 <!-- submit post -->
+<section align="center">
+  <!-- Button trigger modal -->
+  <h4> Ask Any Queries </h4><br>
+<button type="button" class="btn btn-primary px-3 " data-bs-toggle="modal" data-bs-target="#exampleModal" style="background-color:#0e3253">
+  Post
+</button>
 
-<div class="container">
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <form action="/community/submit-post/" method="post" id="post_form">
+            {% csrf_token %}
+            <div class="row justify-content-center m-3">
+              <div class="col-auto my-3">
+                <label for="exampleFormControlInput1" class="form-label">Post title</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1" name="post_title" id="post_title"
+                  placeholder="" />
+              </div>
+              <div class="col-auto">
+                <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" name="post_details" id="post_details" rows="3"
+                  cols="50"></textarea>
+              </div>
+              <div class="col-auto">
+                <input type="submit" value="Post" name="post" class="btn my-5 p-0" style="
+                    width: 130px;
+                    height: 40px;
+                    background-color: #15252b;
+                    border-radius: 15px;
+                    color: white;
+                  " />
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+<!-- <div class="container">
   <form action="/community/submit-post/" method="post" id="post_form">
     {% csrf_token %}
     <div class="row justify-content-center m-3">
@@ -51,7 +101,7 @@
       </div>
     </div>
   </form>
-</div>
+</div> -->
 
 <hr />
 <input type="hidden" name="" id="user" value=" {{user_id}}">
@@ -130,9 +180,11 @@
         success: function (response) {
           console.log(response.post_by_name);
           $("#post_list").empty();
+          $("#ncount").text(response.n_count);
           for(i in response.all_post){
             let temp ='  <div class="card my-2"><div class="card-header"><a href="#">'+response.post_by_name[i].post_by__full_name+'</a></div><div class="card-body"><h5 class="card-title"><a href="/community/post-details/'+response.all_post[i].id+'">'+response.all_post[i].post_title+'</a></h5><p class="card-text">'+response.all_post[i].post_des+'</p></div></div>'
             $("#post_list").append(temp)
+            
           }
           
         },
@@ -150,7 +202,12 @@
         url : '/community/notification/'+ u_id,
         success : function(response){
           $("#ncount").text(response.count);
+          $('#notf_body').empty()
           console.log(response.notif_data);
+          for(i in response.notif_data){
+            let temp = '<li><a class="dropdown-item" href="/community/post-details/' + response.notif_data[i].post_id+'">' +response.notif_data[i].notify+'</a></li>'
+            $('#notf_body').append(temp)
+          }
         } 
       })
     })

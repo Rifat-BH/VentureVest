@@ -4,12 +4,13 @@
 <link rel="stylesheet" href="/static/chat.css"> {% endblock %}
 
 {% block contant %}
-<div class="container-fluid">
+
+<div class="container my-2 shadow p-3 mb-5 bg-body rounded" style="background-color: white; width: 60%; overflow-x: hidden;">
     <div class="row">
-        <div style="height: 700px; overflow-y: scroll; width: 30%;">
+        <div class="container" style="height: 700px; overflow-y: scroll; width: 30%;">
             <h3>Chat</h3>
             <!-- search -->
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-9">
                     <input type="text" class="form-control" name="" id=""
                         style="border-radius: 15px; border: 1px solid black;">
@@ -17,7 +18,7 @@
                 <div class="col-3 m-0" style="margin-left: -20px;">
                     <button type="button" class="btn btn-outline-dark">Search</button>
                 </div>
-            </div>
+            </div> -->
             <!-- profile list -->
             {% for profile,id in rec_name %}
             <div class="row text-center my-2">
@@ -26,7 +27,7 @@
                     <img src="https://static.vecteezy.com/system/resources/previews/002/002/403/original/man-with-beard-avatar-character-isolated-icon-free-vector.jpg"
                         alt="" style="border-radius: 50%; height: 50px; width: 50px;">
                 </div>
-                <div class="col-8 text-center" style="margin-left: -30px; padding-top: 10px;">
+                <div class="col-8 text-center" style="margin-left: 10px; padding-top: 10px;">
                     <h5 style="justify-content: center; text-align: center;"> <a href="/chat/startup-profile/{{id}}"
                             style="text-decoration: none; color:black;">{{profile}}</a> </h5>
                 </div>
@@ -47,6 +48,31 @@
                             style="border-radius: 50%;">
                         <span style="padding-top: 20px; margin-top: 10px;">{{r_name}}</span>
                     </a>
+                </div>
+                <!-- notification -->
+                <div class="row"
+                    style="float: right; position: relative; justify-content: end; margin-left: 170px; margin-top: -70px;">
+                    <div class="dropdown" id="notification">
+                        <a class="btn dropdown-toggle mx-3" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false" style="background-color: rgba(201, 201, 201, 0.719)">
+                            <i class="fa-solid fa-bell" style="color: white"><span class="count" id="ncount" style="
+                                color: #000000;
+                                font-size: 14px;
+                                background: red;
+                                padding: 2px 5px;
+                                margin-right: 0px;
+                                border-radius: 50%;
+                                margin-left: 5px;
+                                "></span></i>
+                        </a>
+
+                        <ul class="dropdown-menu" id="notf_body">
+                            {% for n in msgNotif %}
+                            <li><a class="dropdown-item" href="/chat/startup-profile/{{n.msg_send_by}}">{{n.notify}}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
             </nav>
 
@@ -73,14 +99,15 @@
 
             </div>
 
-            <div style="align-items: flex-end; position:absolute; bottom: 0; justify-content: end; width: 80%; margin-bottom: -85px;">
+            <div
+                style="align-items: flex-end; position:absolute; bottom: 0; justify-content: end; width: 80%; margin-bottom: -85px;">
                 <form action="/chat/startup/send" method="post" id="send_message">
                     {% csrf_token %}
                     <input type="hidden" name="s_id" id="s_id" value="{{s_id}}">
                     <input type="hidden" name="rec_id" id="rec_id" value="{{rec_id}}">
                     <div class="row">
-                        <div class="col-9">
-                            <textarea class="form-control" placeholder="Aa" id="message" name="message"></textarea>
+                        <div class="col-4">
+                            <textarea class="form-control" placeholder="Aa" id="message" name="message" required></textarea>
                         </div>
                         <div class="col-3" style="margin-top: 10px;">
                             <button type="submit" id="submit" class="btn btn-primary">Send</button>
@@ -116,31 +143,54 @@
         });
         let rec_id = $("#rec_id").val();
         let s = $("#s_id").val();
-        setInterval(function(){
+        setInterval(function () {
             $.ajax({
-                type : 'GET',
-                url : '/chat/startup-profilemsg/'+rec_id,
-                success: function(response){
-                    console.log(response);
+                type: 'GET',
+                url: '/chat/startup-profilemsg/' + rec_id,
+                success: function (response) {
+                    // console.log(response);
+                    $("#ncount").text(response.count);
                     $("#chat-body").empty();
-                    for(i in response.msg_data){
+                    for (i in response.msg_data) {
                         // console.log(response.msg_data[i].msgg);
-                        if(response.msg_data[i].s_id_id == s){
-                            let temp = '<div class="sender">'+ response.msg_data[i].msgg +'</div>';
+                        if (response.msg_data[i].s_id_id == s) {
+                            let temp = '<div class="sender">' + response.msg_data[i].msgg + '</div>';
                             $("#chat-body").append(temp);
                         }
-                        else{
-                            let temp = '<div class="recever">'+ response.msg_data[i].msgg +'</div>';
+                        else {
+                            let temp = '<div class="recever">' + response.msg_data[i].msgg + '</div>';
                             $("#chat-body").append(temp);
                         }
 
                     }
                 },
-                error: function(response){
+                error: function (response) {
                     console.log(response);
                 },
             });
-        },1000);
+        }, 1000);
+
+      
+        $("#notification").click(function () {
+            $.ajax({
+                type: 'GET',
+                url: '/chat/notification/' + s,
+                success: function (response) {
+                    console.log(response);
+                    $("#ncount").text(response.count);
+                    $('#notf_body').empty()
+                    console.log(response.notif_data);
+                    for (i in response.notif_data) {
+                        let temp = '<li><a class="dropdown-item" href="/chat/startup-profile/' + response.notif_data[i].msg_send_by + '">' + response.notif_data[i].notify + '</a></li>'
+                        $('#notf_body').append(temp)
+                    }
+                },
+                error : function(response){
+                    console.log(response)
+                }
+                
+            });
+        });
     });
 
 </script>

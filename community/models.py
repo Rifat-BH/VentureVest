@@ -6,7 +6,7 @@ from datetime import datetime
 class CommunityPost(models.Model):
     post_by = models.ForeignKey(Auts,blank = True, null = True, on_delete= models.CASCADE,related_name='post_by')
     post_date = models.DateTimeField(default=datetime.now())
-    post_title = models.CharField(max_length=50)
+    post_title = models.CharField(max_length=100)
     post_des = models.CharField(max_length=1000)
 
 class CommunityComment(models.Model):
@@ -18,7 +18,7 @@ class CommunityComment(models.Model):
 class CommentNofity(models.Model):
     post_id = models.IntegerField()
     comment_by = models.ForeignKey(Auts,blank = True, null = True, on_delete= models.CASCADE,related_name='nf_comment_by')
-    notify = models.CharField(max_length=30)
+    notify = models.CharField(max_length=50)
     post_by = models.ForeignKey(Auts,blank = True, null = True, on_delete= models.CASCADE,related_name='nf_post_by')
     status = models.IntegerField(default=0)
     comment_date = models.DateTimeField(default=datetime.now())
