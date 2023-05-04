@@ -1,0 +1,27 @@
+body{
+    overflow-x: hidden;
+}
+.recever {
+    background-color: rgb(184, 184, 184);
+    border-radius: 20px;
+    padding: 10px;
+    margin: 5px 10px;
+    width: auto;
+    float: left;
+    display: block;
+    margin-right: 60%;
+}
+
+.sender {
+    background-color: rgb(41, 127, 240);
+    color: white;
+    border-radius: 20px;
+    padding: 10px;
+    float: right;
+    width: auto;
+    margin: 5px 10px;
+    justify-content: right;
+    display: block;
+    text-align: right;
+    margin-left: 60%;
+}

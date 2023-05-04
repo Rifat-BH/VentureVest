@@ -1,0 +1,217 @@
+{% extends 'base.html' %}
+{% block title%} Community {% endblock %}
+{% block contant %}
+<!-- notification -->
+<div class="row" style="float: right; position: relative; justify-content: end; margin-top: -60px;">
+  <div class="dropdown" id="notification">
+    <a class="btn dropdown-toggle mx-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+      style="background-color: #0e3253">
+      <i class="fa-solid fa-bell" style="color: white"><span class="count" id="ncount" style="
+            color: #000000;
+            font-size: 14px;
+            background: red;
+            padding: 2px 5px;
+            margin-right: 0px;
+            border-radius: 50%;
+            margin-left: 5px;
+          ">{{nc}}</span></i>
+    </a>
+
+    <ul class="dropdown-menu" id="notf_body">
+      {% for n in notif %}
+      <li><a class="dropdown-item" href="/community/post-details/{{n.post_id}}">{{n.notify}}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+<!-- submit post -->
+<section align="center">
+  <!-- Button trigger modal -->
+  <h4> Ask Any Queries </h4><br>
+<button type="button" class="btn btn-primary px-3 " data-bs-toggle="modal" data-bs-target="#exampleModal" style="background-color:#0e3253">
+  Post
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <form action="/community/submit-post/" method="post" id="post_form">
+            {% csrf_token %}
+            <div class="row justify-content-center m-3">
+              <div class="col-auto my-3">
+                <label for="exampleFormControlInput1" class="form-label">Post title</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1" name="post_title" id="post_title"
+                  placeholder="" />
+              </div>
+              <div class="col-auto">
+                <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" name="post_details" id="post_details" rows="3"
+                  cols="50"></textarea>
+              </div>
+              <div class="col-auto">
+                <input type="submit" value="Post" name="post" class="btn my-5 p-0" style="
+                    width: 130px;
+                    height: 40px;
+                    background-color: #15252b;
+                    border-radius: 15px;
+                    color: white;
+                  " />
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+<!-- <div class="container">
+  <form action="/community/submit-post/" method="post" id="post_form">
+    {% csrf_token %}
+    <div class="row justify-content-center m-3">
+      <div class="col-auto my-3">
+        <label for="exampleFormControlInput1" class="form-label">Post title</label>
+        <input type="text" class="form-control" id="exampleFormControlInput1" name="post_title" id="post_title"
+          placeholder="" />
+      </div>
+      <div class="col-auto">
+        <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" name="post_details" id="post_details" rows="3"
+          cols="50"></textarea>
+      </div>
+      <div class="col-auto">
+        <input type="submit" value="Post" name="post" class="btn my-5 p-0" style="
+            width: 130px;
+            height: 40px;
+            background-color: #15252b;
+            border-radius: 15px;
+            color: white;
+          " />
+      </div>
+    </div>
+  </form>
+</div> -->
+
+<hr />
+<input type="hidden" name="" id="user" value=" {{user_id}}">
+<!-- post list -->
+<div class="container" id="post_list">
+  <!-- {% for post in posts  %}
+  <div class="card my-2">
+    <div class="card-header">
+      <a href="#">{{post.post_by.full_name}}</a>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title"><a href="/community/post-details/{{post.id}}">{{post.post_title}}</a></h5>
+      <p class="card-text">
+        {{post.post_des}}
+      </p>
+    </div>
+  </div> -->
+  <!-- {% endfor %} -->
+  <!-- <div class="card my-2">
+    <div class="card-header">
+      <a href="#">User Name</a>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title"><a href="">Post title</a></h5>
+      <p class="card-text">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit mollitia
+        ipsam ducimus cupiditate pariatur rerum repellendus, alias saepe officia
+        ex animi incidunt velit corporis magni vitae vero qui voluptates
+        dolorem.
+      </p>
+    </div>
+  </div>
+  <div class="card my-2">
+    <div class="card-header">
+      <a href="#">User Name</a>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title"><a href="">Post title</a></h5>
+      <p class="card-text">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit mollitia
+        ipsam ducimus cupiditate pariatur rerum repellendus, alias saepe officia
+        ex animi incidunt velit corporis magni vitae vero qui voluptates
+        dolorem.
+      </p>
+    </div>
+  </div>  -->
+
+</div>
+{% endblock %}
+
+{% block ajax_script %}
+<script>
+  $(document).ready(function () {
+    $("#post_form").submit(function (e) {
+      e.preventDefault();
+      var form = $(this);
+      $.ajax({
+        type: 'POST',
+        url: form.attr('action'),
+        data: form.serialize(),
+        success: function (response) {
+          console.log(response);
+
+        },
+        error: function (response) {
+          console.log(response);
+        },
+
+      });
+    });
+
+    setInterval(function () {
+      $.ajax({
+        type: 'GET',
+        url: '/community/posts_ajax',
+        success: function (response) {
+          console.log(response.post_by_name);
+          $("#post_list").empty();
+          $("#ncount").text(response.n_count);
+          for(i in response.all_post){
+            let temp ='  <div class="card my-2"><div class="card-header"><a href="#">'+response.post_by_name[i].post_by__full_name+'</a></div><div class="card-body"><h5 class="card-title"><a href="/community/post-details/'+response.all_post[i].id+'">'+response.all_post[i].post_title+'</a></h5><p class="card-text">'+response.all_post[i].post_des+'</p></div></div>'
+            $("#post_list").append(temp)
+            
+          }
+          
+        },
+        error: function (response) {
+          console.log(response);
+        },
+
+      });
+    }, 1000);
+    var u_id = $("#user").val();
+    $("#notification").click(function(){
+      
+      $.ajax({
+        type : 'GET',
+        url : '/community/notification/'+ u_id,
+        success : function(response){
+          $("#ncount").text(response.count);
+          $('#notf_body').empty()
+          console.log(response.notif_data);
+          for(i in response.notif_data){
+            let temp = '<li><a class="dropdown-item" href="/community/post-details/' + response.notif_data[i].post_id+'">' +response.notif_data[i].notify+'</a></li>'
+            $('#notf_body').append(temp)
+          }
+        } 
+      })
+    })
+    
+  });
+</script>
+{% endblock %}
