@@ -68,7 +68,11 @@ def payment(request):
             'ammount' : ammount,
             'roi' : roi,
         }
-        return render(request, 'paymentGatewat.html', data)   
+        if(int(ammount)>0):
+           return render(request, 'paymentGatewat.html', data)   
+        else:
+           return redirect(request.META.get('HTTP_REFERER'))
+            
 def get_data_graph2(request,cname):
     c_idQ = startupBasicInfo2.objects.get(companyName = cname)
     print(c_idQ.user_id_id)

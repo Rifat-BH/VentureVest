@@ -17,7 +17,7 @@
   }
 
   header {
-    background-color: #e2e2e2;
+    background-color: #efefef;
     color: rgb(3, 3, 3);
     padding: 10px;
     text-align: center;
@@ -34,10 +34,11 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     grid-gap: 20px;
+    
   }
 
   .number {
-    background:  #e2e2e2;
+    background:  #ffffff;
     border-radius: 5px;
     padding: 10px;
     text-align: center;
@@ -72,13 +73,24 @@
     <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
       Apply for Fundraising
     </button>
+    <a class="btn btn-outline-dark" href="/startup/deleteList/">
+      Remove from listing
+    </a>
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+        <label class="m-3" style="color: red;" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</label>
+        {% endfor %}
+    </ul> 
+
+{% endif %}
   </header>
 
   <!-- funding summary -->
   <div class="container my-3">
-    <div class="row">
-      <div class="col-sm-6">
-        <div class="card">
+    <div class="row justify-content-center">
+      <div class="col-sm-4">
+        <div class="card shadow-lg p-3 mb-2 bg-body rounded" style="background-color: #fff; border-bottom: 3px solid #ff00fb;">
           <div class="card-body text-center">
             <h5 class="card-title">Goal:</h5>
             <p class="card-text">{{startupData2.investment}}</p>
@@ -86,8 +98,8 @@
           </div>
         </div>
       </div>
-      <div class="col-sm-6">
-        <div class="card">
+      <div class="col-sm-4">
+        <div class="card shadow-lg p-3 mb-2 bg-body rounded" style="background-color: #fff; border-bottom: 3px solid #ff0000;">
           <div class="card-body text-center">
             <h5 class="card-title">Raised:</h5>
             <p class="card-text">{{totalInvest}}</p>
@@ -122,7 +134,7 @@
               <td>{{ startupData2.duration }} Months</td>
             </tr>
             <tr>
-              <th scope="row">Min. Investment</th>
+              <th scope="row">Raise Ammount</th>
               <td>{{ startupData2.investment }} tk.</td>
             </tr>
             <tr>
@@ -161,7 +173,7 @@
               <input type="number" name="duration"  class="form-control"
                 placeholder="Duration (e.g. 11 Months)">
               <input type="number" name="investment"  class="form-control"
-                placeholder="Min. Investment (e.g. 10,000 tk)">
+                placeholder="Raise Ammount (e.g. 100,000 tk)">
               <input type="number" name="roi"  class="form-control" placeholder="Projected ROI (e.g. 15%)">
               <input type="text" name="Repayments"  class="form-control"
                 placeholder="Repayments (e.g. 4 installments)">
@@ -203,23 +215,23 @@
   </div>
   <main>
     <section id="key-numbers">
-      <div class="number">
+      <div class="number card shadow-lg p-3 mb-2 bg-body rounded" style="background-color: #fff; border-bottom: 3px solid #0099ff;">
         <h6> <b>Revenue </b> </h6>
         <p>{{ startupData2.revenue }} tk.</p>
       </div>
-      <div class="number">
+      <div class="number card shadow-lg p-3 mb-2 bg-body rounded" style="background-color: #fff; border-bottom: 3px solid #ff0000;">
         <h6><b>Gross Margin </b> </h6>
         <p>{{ startupData2.gross_margin }}%</p>
       </div>
-      <div class="number">
+      <div class="number card shadow-lg p-3 mb-2 bg-body rounded" style="background-color: #fff; border-bottom: 3px solid #44ff00;">
         <h6><b>Monthly Recurring Revenue (MRR) </b> </h6>
         <p>{{ startupData2.mrr }} tk.</p>
       </div>
-      <div class="number">
+      <div class="number card shadow-lg p-3 mb-2 bg-body rounded" style="background-color: #fff; border-bottom: 3px solid #ffd900;">
         <h6><b>Customer Acquisition Cost </b>  </h6>
         <p>{{ startupData2.cac }} tk.</p>
       </div>
-      <div class="number">
+      <div class="number card shadow-lg p-3 mb-2 bg-body rounded" style="background-color: #fff; border-bottom: 3px solid #f200ff;">
         <h6><b>Burn Rate </b> </h6>
         <p>{{ startupData2.burn_rate }} tk.</p>
       </div>
@@ -284,29 +296,30 @@
 
 <!-- Button trigger modal -->
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#example" id="profit">
+<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#example" id="profit">
   Profit Return
 </button>
+<p>Return profit to the investors</p>
 
 <!-- Modal -->
 <div class="modal fade" id="example" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel2">Modal title</h1>
+        <h1 class="modal-title fs-5" id="exampleModalLabel2">Profit Return</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body text-center p-2">
         <form action="{% url 'return-profit' %}" method="post">
           {% csrf_token %}
           <select class="form-select" aria-label="Default select example" name="i_id" id="investor_list">
             <option value="1">One</option>
           </select>
-          <input type="text" name="comment" id="" required>
+          <input class="m-3" type="text" name="comment" id="" placeholder="Note" required>
           <input type="hidden" name="roi" value="{{ startupData2.roi }}">
           <input type="hidden" name="installment" value = "{{ startupData2.Repayments }}">
-          <input type="hidden" name="s_id" value = "{{ request.session.id }}">
-          <button type="submit" class="btn btn-primary">Payment</button>
+          <input type="hidden" name="s_id" value = "{{ request.session.id }}"> <br>
+          <button class="btn btn-dark m-1" type="submit">Payment</button>
         </form>
       </div>
       <div class="modal-footer">

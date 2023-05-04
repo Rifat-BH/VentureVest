@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.http import HttpResponseRedirect
 from auths.models import Auts
 from startup.models import startupBasicInfo
 from backupStartupDB.models import startupBasicInfo2, applyForFundrising, monthlyRevenue, profit
+from django.contrib import messages
+from django.utils.translation import get_language
 
 from  investor.models import Invest
 from backupStartupDB.models import startupBasicInfo2
@@ -136,19 +138,7 @@ def startupList (request):
     }
     return render(request,"startupList.html",data)
     # return render(request,"startupList.html")
-
-def search_startup(request):
-    if request.method == 'POST':
-        search_key = request.POST.get('search')
-    if search_key != None:
-        startupData2 =  applyForFundrising.objects.filter(Q(status =1, name__icontains = search_key) | Q(status =1, description__icontains = search_key))
-    else:
-        startupData2 =  applyForFundrising.objects.filter(status =1)
-    data ={
-        'startupData2' : startupData2
-    }
-    return render(request,"startupList.html",data)
-
+    
 def startupDetailsViews(request,id):
     uid = request.session['id']
     invAm = 0
@@ -230,3 +220,21 @@ def return_profit_save_db(request):
     sprofit = profit(st_id_id=st_ids, ammount=ammount, inv_id_id=inv_id, comments=comment)
     sprofit.save()
     return HttpResponseRedirect('/startup/home/')
+
+def deleteList(request):
+    id = request.session['id']
+    applyForFundrising.objects.filter(user_id_id = id).update(status = 2)
+    messages.info(request, 'Your listing has been removed!')
+    return redirect(request.META.get('HTTP_REFERER'))
+
+def search_startup(request):
+    if request.method == 'POST':
+        search_key = request.POST.get('search')
+    if search_key != None:
+        startupData2 =  applyForFundrising.objects.filter(Q(status =1, name__icontains = search_key) | Q(status =1, description__icontains = search_key))
+    else:
+        startupData2 =  applyForFundrising.objects.filter(status =1)
+    data ={
+        'startupData2' : startupData2
+    }
+    return render(request,"startupList.html",data)
