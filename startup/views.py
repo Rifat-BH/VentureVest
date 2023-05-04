@@ -226,3 +226,15 @@ def deleteList(request):
     applyForFundrising.objects.filter(user_id_id = id).update(status = 2)
     messages.info(request, 'Your listing has been removed!')
     return redirect(request.META.get('HTTP_REFERER'))
+
+def search_startup(request):
+    if request.method == 'POST':
+        search_key = request.POST.get('search')
+    if search_key != None:
+        startupData2 =  applyForFundrising.objects.filter(Q(status =1, name__icontains = search_key) | Q(status =1, description__icontains = search_key))
+    else:
+        startupData2 =  applyForFundrising.objects.filter(status =1)
+    data ={
+        'startupData2' : startupData2
+    }
+    return render(request,"startupList.html",data)

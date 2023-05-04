@@ -134,7 +134,7 @@
               <td>{{ startupData2.duration }} Months</td>
             </tr>
             <tr>
-              <th scope="row">Min. Investment</th>
+              <th scope="row">Raise Ammount</th>
               <td>{{ startupData2.investment }} tk.</td>
             </tr>
             <tr>
@@ -173,7 +173,7 @@
               <input type="number" name="duration"  class="form-control"
                 placeholder="Duration (e.g. 11 Months)">
               <input type="number" name="investment"  class="form-control"
-                placeholder="Min. Investment (e.g. 10,000 tk)">
+                placeholder="Raise Ammount (e.g. 100,000 tk)">
               <input type="number" name="roi"  class="form-control" placeholder="Projected ROI (e.g. 15%)">
               <input type="text" name="Repayments"  class="form-control"
                 placeholder="Repayments (e.g. 4 installments)">
@@ -306,20 +306,20 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel2">Modal title</h1>
+        <h1 class="modal-title fs-5" id="exampleModalLabel2">Profit Return</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body text-center p-2">
         <form action="{% url 'return-profit' %}" method="post">
           {% csrf_token %}
           <select class="form-select" aria-label="Default select example" name="i_id" id="investor_list">
             <option value="1">One</option>
           </select>
-          <input type="text" name="comment" id="" required>
+          <input class="m-3" type="text" name="comment" id="" placeholder="Note" required>
           <input type="hidden" name="roi" value="{{ startupData2.roi }}">
           <input type="hidden" name="installment" value = "{{ startupData2.Repayments }}">
-          <input type="hidden" name="s_id" value = "{{ request.session.id }}">
-          <button type="submit" class="btn btn-primary">Payment</button>
+          <input type="hidden" name="s_id" value = "{{ request.session.id }}"> <br>
+          <button class="btn btn-dark m-1" type="submit">Payment</button>
         </form>
       </div>
       <div class="modal-footer">

@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
-
+{% block search%}
+<form class="d-flex" role="search" method="post" action="{% url 'search' %}">
+    {% csrf_token %}
+  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" style="background: transparent; color: white;">
+  <button class="btn btn-outline-info" type="submit">Search</button>
+</form>
+{% endblock %}
 {% block contant %}
 
 <head>
@@ -80,6 +86,8 @@
         </div>
         
     </div>
+    {% empty %}
+    <span class="m-auto"><h3>No Data Found</h3></span>
     {% endfor %}
 </div>
 

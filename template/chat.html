@@ -5,9 +5,10 @@
 
 {% block contant %}
 
-<div class="container-fluid">
+<div class="container my-2 shadow p-3 mb-5 bg-body rounded"
+    style="background-color: white; width: 60%; overflow-x: hidden;">
     <div class="row">
-        <div style="height: 700px; overflow-y: scroll; width: 30%;">
+        <div class="container" style="height: 700px; overflow-y: scroll; width: 30%;">
             <h3>Chat</h3>
             <!-- search -->
             <!-- <div class="row">
@@ -27,7 +28,7 @@
                     <img src="https://static.vecteezy.com/system/resources/previews/002/002/403/original/man-with-beard-avatar-character-isolated-icon-free-vector.jpg"
                         alt="" style="border-radius: 50%; height: 50px; width: 50px;">
                 </div>
-                <div class="col-8 text-center" style="margin-left: -30px; padding-top: 10px;">
+                <div class="col-8 text-center" style="margin-left: 10px; padding-top: 10px;">
                     <h5 style="justify-content: center; text-align: center;"> <a href="/chat/startup-profile/{{id}}"
                             style="text-decoration: none; color:black;">{{profile}}</a> </h5>
                 </div>
@@ -40,44 +41,55 @@
 
         <div style="height: 600px; overflow-y: scroll; width: 70%;">
             <!-- navbar -->
-            <nav class="navbar" style="background-color: rgba(201, 201, 201, 0.719);">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="#">
-                        <img src="https://static.vecteezy.com/system/resources/previews/002/002/403/original/man-with-beard-avatar-character-isolated-icon-free-vector.jpg"
-                            alt="Logo" width="50" height="50" class="d-inline-block align-text-top"
-                            style="border-radius: 50%;">
-                        <span style="padding-top: 20px; margin-top: 10px;">{{r_name}}</span>
-                    </a>
-                </div>
-                <!-- notification -->
-                <div class="row"
-                    style="float: right; position: relative; justify-content: end; margin-left: 170px; margin-top: -70px;">
-                    <div class="dropdown" id="notification">
-                        <a class="btn dropdown-toggle mx-3" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false" style="background-color: rgba(201, 201, 201, 0.719)">
-                            <i class="fa-solid fa-bell" style="color: white"><span class="count" id="ncount" style="
-                                color: #000000;
-                                font-size: 14px;
-                                background: red;
-                                padding: 2px 5px;
-                                margin-right: 0px;
-                                border-radius: 50%;
-                                margin-left: 5px;
-                                "></span></i>
-                        </a>
 
-                        <ul class="dropdown-menu" id="notf_body">
-                            {% for n in msgNotif %}
-                            <li><a class="dropdown-item" href="/chat/startup-profile/{{n.msg_send_by}}">{{n.notify}}</a>
-                            </li>
-                            {% endfor %}
-                        </ul>
+            <nav class="navbar" style="background-color: rgba(201, 201, 201, 0.719);">
+                <div class="row">
+                    <div class="col-10">
+                        <div class="container-fluid">
+                            <a class="navbar-brand" href="#">
+                                <img src="https://static.vecteezy.com/system/resources/previews/002/002/403/original/man-with-beard-avatar-character-isolated-icon-free-vector.jpg"
+                                    alt="Logo" width="50" height="50" class="d-inline-block align-text-top"
+                                    style="border-radius: 50%;">
+                                <span style="padding-top: 20px; margin-top: 10px;">{{r_name}}</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <!-- notification -->
+                        <div>
+                            
+                            <div class="dropdown" id="notification">
+                                <a class="btn dropdown-toggle mx-3" href="#" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false" style="background-color: rgba(201, 201, 201, 0.719)">
+                                    <i class="fa-solid fa-bell" style="color: white"><span class="count" id="ncount"
+                                            style="
+                 color: #000000;
+                 font-size: 14px;
+                 background: red;
+                 padding: 2px 5px;
+                 margin-right: 0px;
+                 border-radius: 50%;
+                 margin-left: 5px;
+                 "></span></i>
+                                </a>
+
+                                <ul class="dropdown-menu" id="notf_body">
+                                    {% for n in msgNotif %}
+                                    <li><a class="dropdown-item"
+                                            href="/chat/startup-profile/{{n.msg_send_by}}">{{n.notify}}</a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+
             </nav>
 
             <div class="container" id="chat-body">
-                {% comment %} <div class="recever">
+                <div class="recever">
                     Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officia odit ad eaque! Illum,
                     molestias saepe.
                 </div>
@@ -93,7 +105,7 @@
 
                 <div class="recever">
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                </div> {% endcomment %}
+                </div>
 
 
 
@@ -106,8 +118,9 @@
                     <input type="hidden" name="s_id" id="s_id" value="{{s_id}}">
                     <input type="hidden" name="rec_id" id="rec_id" value="{{rec_id}}">
                     <div class="row">
-                        <div class="col-9">
-                            <textarea class="form-control" placeholder="Aa" id="message" name="message"></textarea>
+                        <div class="col-4">
+                            <textarea class="form-control" placeholder="Aa" id="message" name="message"
+                                required></textarea>
                         </div>
                         <div class="col-3" style="margin-top: 10px;">
                             <button type="submit" id="submit" class="btn btn-primary">Send</button>
@@ -154,7 +167,7 @@
                     for (i in response.msg_data) {
                         // console.log(response.msg_data[i].msgg);
                         if (response.msg_data[i].s_id_id == s) {
-                            let temp = '<div class="sender" style="color:white;">' + response.msg_data[i].msgg + '</div>';
+                            let temp = '<div class="sender">' + response.msg_data[i].msgg + '</div>';
                             $("#chat-body").append(temp);
                         }
                         else {
@@ -170,7 +183,7 @@
             });
         }, 1000);
 
-      
+
         $("#notification").click(function () {
             $.ajax({
                 type: 'GET',
@@ -185,10 +198,10 @@
                         $('#notf_body').append(temp)
                     }
                 },
-                error : function(response){
+                error: function (response) {
                     console.log(response)
                 }
-                
+
             });
         });
     });

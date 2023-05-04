@@ -1,3 +1,6 @@
+body{
+    overflow-x: hidden;
+}
 .recever {
     background-color: rgb(184, 184, 184);
     border-radius: 20px;

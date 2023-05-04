@@ -29,9 +29,7 @@
       border-radius: 1px solid white;
     }
 
-    body {
-      background-color: rgba(231, 231, 229, 0.425);
-    }
+ 
 
     a {
       text-decoration: none;
@@ -83,13 +81,16 @@
           <li class="nav-item">
             <a href="/blogs/blogList" class="nav-link">Blogs</a>
           </li>
+          {% if request.session.catagory == 'investor' or request.session.catagory == 'startup'%}
           <li class="nav-item">
             <a href="/chat/startup" class="nav-link">Chat</a>
           </li>
+          {% endif %}
           <li class="nav-item">
             <a href="/logout/signout/" class="nav-link">Logout</a>
           </li>
         </ul>
+        {% block search%} {% endblock %}
         <!-- <form class="d-flex" role="search">
               <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
               <button class="btn btn-outline-success" type="submit">Search</button>
