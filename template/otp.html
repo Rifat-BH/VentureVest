@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <title>Signin</title>
+    <style> 
+        .card {
+            width: 350px;
+            padding: 10px;
+            border-radius: 20px;
+            background: #fff;
+            border: none;
+            height: 350px;
+            position: relative;
+          }
+          
+          .container {
+            height: 100vh;
+          }
+          
+          body {
+            background: #eee;
+          }
+          
+          .mobile-text {
+            color: #989696b8;
+            font-size: 15px;
+          }
+          
+          .form-control {
+            margin-right: 12px;
+          }
+          
+          .form-control:focus {
+            color: #495057;
+            background-color: #fff;
+            border-color: #ff8880;
+            outline: 0;
+            box-shadow: none;
+          }
+          
+          .cursor {
+            cursor: pointer;
+          }
+    </style>
+</head>
+
+<body>
+    <form action="{% url 'otp' %}" method="POST">
+        {% csrf_token %}
+
+    <div class=" d-flex justify-content-center align-items-center container">
+        <div class="card py-5 px-3 ">
+                <h5 class="">Two step Verification</h5>
+                <p class="mobile-text">Enter the one time password we just send on you </p>
+            <div class="  mt-3">
+                <input type="otp" name="otp" id="otp" placeholder="OTP" class="form-control" autofocus="">
+            </div>
+            <input type="submit" class="btn btn-danger my-3 px-5" value="Confirm"><br>
+
+            <div class="text-center mt-2">
+                <span class="d-block mobile-text">Don't receive the code?</span>
+                <span class="font-weight-bold text-danger cursor">Resend</span></div>
+        </div>
+    </div>
+
+</form>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+        integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,9 +1,14 @@
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from auths.models import Auts
+from .utils import send_otp
+from datetime import datetime
+import pyotp
+
+
 # Create your views here.
 def login(request):
 
@@ -19,27 +24,37 @@ def login(request):
                 if data['catagory'] == 'investor' :
                     userid = int(data['id'])
                     cat = data['catagory']
+                    
+                    # url = "/investor/home/?id={}".format(userid)
+                    send_otp(request)
                     request.session['id']  = userid
                     request.session['catagory']  = cat
-                    # url = "/investor/home/?id={}".format(userid)
-                    url = "/investor/home/"
-                    return HttpResponseRedirect(url)
+                    # url = "/investor/home/"  #....
+                    return redirect('otp')
+                    # return HttpResponseRedirect(url) #....
                     # return HttpResponse("Investor")
                 elif data['catagory'] == 'startup':
                     userid = int(data['id'])
                     cat = data['catagory']
+                    
+                    send_otp(request)
                     request.session['id']  = userid
                     request.session['catagory']  = cat
-                    url = "/startup/home/"
-                    return HttpResponseRedirect(url)
+                    
+                    return redirect('otp')
+                    # url = "/startup/home/" #....
+                    # return HttpResponseRedirect(url) #....
                     # return HttpResponse("Startup")
                 elif data['catagory'] == 'admin':
                     userid = int(data['id'])
                     cat = data['catagory']
+                    
+                    send_otp(request)
                     request.session['id']  = userid
                     request.session['catagory']  = cat
-                    url = "/adminControl/home/?user_id={}".format(userid)
-                    return HttpResponseRedirect(url)
+                    return redirect('otp')
+                    # url = "/adminControl/home/?user_id={}".format(userid) #....
+                    # return HttpResponseRedirect(url) #....
                     # url = "/admin/home/?user_id={}".format(userdata.id)
                     # return HttpResponseRedirect(url)
                     # return HttpResponse("Startup")
@@ -75,6 +90,50 @@ def signup(request):
         
 
     return render(request, "signup.html")
+
+def otp_view(request):
+    error_message = None
+    if request.method == 'POST':
+        otp = request.POST['otp']
+        userid = request.session['id']
+        cat = request.session['catagory']
+        otp_secret_key = request.session['otp_secret_key']
+        otp_valid_date = request.session['otp_valid_date']
+        
+        if otp_secret_key and otp_valid_date is not None:
+            valid_until = datetime.fromisoformat(otp_valid_date)
+            
+            if valid_until > datetime.now():
+                totp = pyotp.TOTP(otp_secret_key, interval=60)
+                if totp.verify(otp):
+                    # useridVerified = get_object_or_404(User, userid=userid)
+                    # catagoryVerified = get_object_or_404(User, cat=cat)
+                    # login(request, useridVerified, catagoryVerified)
+                    
+                    if cat == "investor":
+                        url = "/investor/home/"  #....
+                    if cat == "startup":
+                        url = "/startup/home/" #....
+                    if cat == "admin":
+                        url = "/adminControl/home/?user_id={}".format(userid)
+                    
+                
+                    del request.session['otp_secret_key']
+                    del request.session['otp_valid_date']
+                    
+                    return HttpResponseRedirect(url) #....
+
+                    # return redirect('login')
+                else:
+                    error_message = 'invalid one time password'
+            else:
+                error_message = 'one time password has expired'
+        else:
+            error_message = 'ups...something went wrong :('
+                 
+        
+    return render(request, 'otp.html', {'error_message': error_message} )
+
 
 def logout(request):
     del request.session['id']
