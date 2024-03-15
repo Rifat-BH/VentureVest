@@ -56,16 +56,17 @@
 
     <div class=" d-flex justify-content-center align-items-center container">
         <div class="card py-5 px-3 ">
-                <h5 class="">Two step Verification</h5>
-                <p class="mobile-text">Enter the one time password we just send on you </p>
+                <h5 class="text-center">Email Verification</h5>
+                <p class="mobile-text text-center">Enter the one time password we just send to your Email </p>
             <div class="  mt-3">
-                <input type="otp" name="otp" id="otp" placeholder="OTP" class="form-control" autofocus="">
+                <input type="otp" name="otp" id="otp" class="form-control text-center" autofocus="">
             </div>
             <input type="submit" class="btn btn-danger my-3 px-5" value="Confirm"><br>
 
             <div class="text-center mt-2">
                 <span class="d-block mobile-text">Don't receive the code?</span>
-                <span class="font-weight-bold text-danger cursor">Resend</span></div>
+                <a href="{% url 'login' %}" class="font-weight-bold text-danger cursor text-decoration: none ">Resend</div>
+                </a>
         </div>
     </div>
 

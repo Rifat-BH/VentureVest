@@ -7,6 +7,9 @@ from auths.models import Auts
 from .utils import send_otp
 from datetime import datetime
 import pyotp
+from django.conf import settings
+from django.core.mail import send_mail
+
 
 
 # Create your views here.
@@ -24,11 +27,13 @@ def login(request):
                 if data['catagory'] == 'investor' :
                     userid = int(data['id'])
                     cat = data['catagory']
-                    
+                    user_email = data['email']
+                    request.session['email']  = user_email
                     # url = "/investor/home/?id={}".format(userid)
                     send_otp(request)
                     request.session['id']  = userid
                     request.session['catagory']  = cat
+                    request.session['email']  = user_email
                     # url = "/investor/home/"  #....
                     return redirect('otp')
                     # return HttpResponseRedirect(url) #....
@@ -36,10 +41,12 @@ def login(request):
                 elif data['catagory'] == 'startup':
                     userid = int(data['id'])
                     cat = data['catagory']
-                    
+                    user_email = data['email']
+                    request.session['email']  = user_email
                     send_otp(request)
                     request.session['id']  = userid
                     request.session['catagory']  = cat
+                    
                     
                     return redirect('otp')
                     # url = "/startup/home/" #....
@@ -48,10 +55,14 @@ def login(request):
                 elif data['catagory'] == 'admin':
                     userid = int(data['id'])
                     cat = data['catagory']
-                    
+                    user_email = data['email']
+                    request.session['email']  = user_email
+
                     send_otp(request)
                     request.session['id']  = userid
                     request.session['catagory']  = cat
+                   
+
                     return redirect('otp')
                     # url = "/adminControl/home/?user_id={}".format(userid) #....
                     # return HttpResponseRedirect(url) #....
@@ -91,6 +102,7 @@ def signup(request):
 
     return render(request, "signup.html")
 
+# make sure settings.py has email and pass to get otp
 def otp_view(request):
     error_message = None
     if request.method == 'POST':
@@ -137,4 +149,5 @@ def otp_view(request):
 
 def logout(request):
     del request.session['id']
+    del request.session['catagory']
     return render(request, "login.html")
