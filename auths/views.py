@@ -10,8 +10,6 @@ import pyotp
 from django.conf import settings
 from django.core.mail import send_mail
 
-
-
 import bcrypt
 # Create your views here.
 
@@ -59,7 +57,6 @@ import bcrypt
 
 #     return render(request, "login.html")
 
-import bcrypt
 
 def login(request):
     if request.method == 'POST':
