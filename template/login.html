@@ -1,3 +1,4 @@
+{% comment %} {% load hijack %} {% endcomment %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -66,7 +67,7 @@
     </div>
     <div class="container w-75 m-ayto my-5">
         <div class="row text-center">
-            <div class="col-md-4 p-4 text-center" style="background-color: rgba(38, 52, 133, 0.856); margin-right:-60px;">
+            <div class="col-md-4 p-4 m-1 text-center" style="background-color: rgba(38, 52, 133, 0.856); margin-right:-60px;">
                 <h2 style="color: white; font-family: Trebuchet MS; margin: 30px 0px;"> Sign in </h2>
                 <form action="{% url 'login' %}" method="post">
                     {% csrf_token %}
@@ -88,7 +89,7 @@
                     <a href= "{% url 'signup' %}" style="color: rgb(55, 99, 243); text-decoration: none;">Sign up</a>
                 </form>
             </div>
-            <div class="col-md-8  p-0" ">
+            <div class="col-md-7  p-0" ">
                 <img src="/static/16494-future_of_work_finance.gif" alt="" class="body-img">
             </div>
         </div>

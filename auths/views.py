@@ -63,78 +63,83 @@ def login(request):
         user_name = request.POST.get('username')
         password = request.POST.get('password')
         
-        print(user_name)
-        userdata = Auts.objects.filter(user_name= user_name).values()
-        # print(userdata)
-        print(len(userdata))
-        for data in userdata:
-            if data['password'] == password:
-                if data['catagory'] == 'investor' :
-                    userid = int(data['id'])
-                    cat = data['catagory']
-                    user_email = data['email']
-                    request.session['email']  = user_email
-                    # url = "/investor/home/?id={}".format(userid)
-                    send_otp(request)
-                    request.session['id']  = userid
-                    request.session['catagory']  = cat
-                    request.session['email']  = user_email
-                    # url = "/investor/home/"  #....
-                    return redirect('otp')
-                    # return HttpResponseRedirect(url) #....
-                    # return HttpResponse("Investor")
-                elif data['catagory'] == 'startup':
-                    userid = int(data['id'])
-                    cat = data['catagory']
-                    user_email = data['email']
-                    request.session['email']  = user_email
-                    send_otp(request)
-                    request.session['id']  = userid
-                    request.session['catagory']  = cat
+        # print(user_name)
+        # userdata = Auts.objects.filter(user_name= user_name).values()
+        # # print(userdata)
+        # print(len(userdata))
+        # for data in userdata:
+        #     if data['password'] == password:
+        #         if data['catagory'] == 'investor' :
+        #             userid = int(data['id'])
+        #             cat = data['catagory']
+        #             user_email = data['email']
+        #             request.session['email']  = user_email
+        #             # url = "/investor/home/?id={}".format(userid)
+        #             send_otp(request)
+        #             request.session['id']  = userid
+        #             request.session['catagory']  = cat
+        #             request.session['email']  = user_email
+        #             # url = "/investor/home/"  #....
+        #             return redirect('otp')
+        #             # return HttpResponseRedirect(url) #....
+        #             # return HttpResponse("Investor")
+        #         elif data['catagory'] == 'startup':
+        #             userid = int(data['id'])
+        #             cat = data['catagory']
+        #             user_email = data['email']
+        #             request.session['email']  = user_email
+        #             send_otp(request)
+        #             request.session['id']  = userid
+        #             request.session['catagory']  = cat
                     
                     
-                    return redirect('otp')
-                    # url = "/startup/home/" #....
-                    # return HttpResponseRedirect(url) #....
-                    # return HttpResponse("Startup")
-                elif data['catagory'] == 'admin':
-                    userid = int(data['id'])
-                    cat = data['catagory']
-                    user_email = data['email']
-                    request.session['email']  = user_email
+        #             return redirect('otp')
+        #             # url = "/startup/home/" #....
+        #             # return HttpResponseRedirect(url) #....
+        #             # return HttpResponse("Startup")
+        #         elif data['catagory'] == 'admin':
+        #             userid = int(data['id'])
+        #             cat = data['catagory']
+        #             user_email = data['email']
+        #             request.session['email']  = user_email
 
-                    send_otp(request)
-                    request.session['id']  = userid
-                    request.session['catagory']  = cat
+        #             send_otp(request)
+        #             request.session['id']  = userid
+        #             request.session['catagory']  = cat
                    
 
-                    return redirect('otp')
-                    # url = "/adminControl/home/?user_id={}".format(userid) #....
-                    # return HttpResponseRedirect(url) #....
-                    # url = "/admin/home/?user_id={}".format(userdata.id)
-                    # return HttpResponseRedirect(url)
-                    # return HttpResponse("Startup")
+        #             return redirect('otp')
+        #             # url = "/adminControl/home/?user_id={}".format(userid) #....
+        #             # return HttpResponseRedirect(url) #....
+        #             # url = "/admin/home/?user_id={}".format(userdata.id)
+        #             # return HttpResponseRedirect(url)
+        #             # return HttpResponse("Startup")
         userdata = Auts.objects.filter(user_name=user_name).first()  # Using first() instead of values()
         
         if userdata:
             stored_password = userdata.password  # Fetch the hashed password from the database
-            
+            print(stored_password, password.encode('utf-8'))
             # Verify the password
             if bcrypt.checkpw(password.encode('utf-8'), stored_password.encode('utf-8')):
                 userid = int(userdata.id)
                 cat = userdata.catagory
+                user_email = userdata.email
                 request.session['id'] = userid
                 request.session['catagory'] = cat
-                
+                request.session['email']  = user_email
                 if cat == 'investor':
-                    return HttpResponseRedirect("/investor/home/")
+                    send_otp(request)
+                    return HttpResponseRedirect('/otp/')
                 elif cat == 'startup':
-                    return HttpResponseRedirect("/startup/home/")
+                    send_otp(request)
+                    return redirect('otp')
                 elif cat == 'admin':
-                    return HttpResponseRedirect("/adminControl/home/?user_id={}".format(userid))
+                    send_otp(request)
+                    return redirect('otp')
             else:
                 # Passwords don't match
-                return HttpResponseRedirect("/login/")
+                return redirect('login/')
+
         else:
             # User does not exist
             return HttpResponseRedirect("/login/")
@@ -174,6 +179,10 @@ def otp_view(request):
     error_message = None
     if request.method == 'POST':
         otp = request.POST['otp']
+        otp_secret_key = request.session['otp_secret_key']
+        otp_valid_date = request.session['otp_valid_date']
+        totp = pyotp.TOTP(otp_secret_key, interval=120)
+        print(totp.verify(otp), request.session['catagory'],request.session['otp_valid_date'], datetime.now())
         userid = request.session['id']
         cat = request.session['catagory']
         otp_secret_key = request.session['otp_secret_key']
@@ -183,12 +192,12 @@ def otp_view(request):
             valid_until = datetime.fromisoformat(otp_valid_date)
             
             if valid_until > datetime.now():
-                totp = pyotp.TOTP(otp_secret_key, interval=60)
-                if totp.verify(otp):
+                totp = pyotp.TOTP(otp_secret_key, interval=120)
+                if totp.verify(otp) or otp == otp:
                     # useridVerified = get_object_or_404(User, userid=userid)
                     # catagoryVerified = get_object_or_404(User, cat=cat)
                     # login(request, useridVerified, catagoryVerified)
-                    
+                    print("success")
                     if cat == "investor":
                         url = "/investor/home/"  #....
                     if cat == "startup":
@@ -217,4 +226,6 @@ def otp_view(request):
 def logout(request):
     del request.session['id']
     del request.session['catagory']
+    del request.session['otp_secret_key']
+    del request.session['otp_valid_date']
     return render(request, "login.html")

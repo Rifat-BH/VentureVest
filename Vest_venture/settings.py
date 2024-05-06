@@ -46,7 +46,9 @@ INSTALLED_APPS = [
     "backupStartupDB",
     "adminControl",
     "blogs",
-    "bcrypt"
+    "bcrypt",
+    # 'hijack',
+    # "hijack.contrib.admin",
 
 ]
 
@@ -58,10 +60,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'hijack.middleware.HijackUserMiddleware',
 ]
 
 ROOT_URLCONF = 'Vest_venture.urls'
-
+LOGIN_REDIRECT_URL = 'login'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -148,7 +151,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = "" #enter email
-EMAIL_HOST_PASSWORD = "" #enter app password. not real. google account-> 2step -> app password -> generate app password
+EMAIL_HOST_USER = "shadhubaba001@gmail.com" #enter email
+EMAIL_HOST_PASSWORD = "sjyo ezak fpem ygfd" #enter app password. not real. google account-> 2step -> app password -> generate app password
 
 #jfo qxh sin zvs . ends vllg
