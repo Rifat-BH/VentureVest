@@ -47,8 +47,9 @@ INSTALLED_APPS = [
     "adminControl",
     "blogs",
     "bcrypt",
-    # 'hijack',
-    # "hijack.contrib.admin",
+    'hijack',
+    "hijack.contrib.admin",
+    'login_history',
 
 ]
 
@@ -60,7 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'hijack.middleware.HijackUserMiddleware',
+    'hijack.middleware.HijackUserMiddleware',
 ]
 
 ROOT_URLCONF = 'Vest_venture.urls'

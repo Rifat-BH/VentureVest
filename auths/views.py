@@ -13,107 +13,11 @@ from django.core.mail import send_mail
 import bcrypt
 # Create your views here.
 
-# def login(request):
-
-#     if request.method == 'POST':
-#         user_name = request.POST.get('username')
-#         password = request.POST.get('password')
-        
-#         print(user_name)
-#         userdata = Auts.objects.filter(user_name= user_name).values()
-#         # print(userdata)
-#         print(len(userdata))
-#         for data in userdata:
-#             if data['password'] == password:
-#                 if data['catagory'] == 'investor' :
-#                     userid = int(data['id'])
-#                     cat = data['catagory']
-#                     request.session['id']  = userid
-#                     request.session['catagory']  = cat
-#                     # url = "/investor/home/?id={}".format(userid)
-#                     url = "/investor/home/"
-#                     return HttpResponseRedirect(url)
-#                     # return HttpResponse("Investor")
-#                 elif data['catagory'] == 'startup':
-#                     userid = int(data['id'])
-#                     cat = data['catagory']
-#                     request.session['id']  = userid
-#                     request.session['catagory']  = cat
-#                     url = "/startup/home/"
-#                     return HttpResponseRedirect(url)
-#                     # return HttpResponse("Startup")
-#                 elif data['catagory'] == 'admin':
-#                     userid = int(data['id'])
-#                     cat = data['catagory']
-#                     request.session['id']  = userid
-#                     request.session['catagory']  = cat
-#                     url = "/adminControl/home/?user_id={}".format(userid)
-#                     return HttpResponseRedirect(url)
-#                     # url = "/admin/home/?user_id={}".format(userdata.id)
-#                     # return HttpResponseRedirect(url)
-#                     # return HttpResponse("Startup")
-#             else:
-#                 return HttpResponseRedirect("login")
-
-#     return render(request, "login.html")
-
-
 def login(request):
     if request.method == 'POST':
         user_name = request.POST.get('username')
         password = request.POST.get('password')
         
-        # print(user_name)
-        # userdata = Auts.objects.filter(user_name= user_name).values()
-        # # print(userdata)
-        # print(len(userdata))
-        # for data in userdata:
-        #     if data['password'] == password:
-        #         if data['catagory'] == 'investor' :
-        #             userid = int(data['id'])
-        #             cat = data['catagory']
-        #             user_email = data['email']
-        #             request.session['email']  = user_email
-        #             # url = "/investor/home/?id={}".format(userid)
-        #             send_otp(request)
-        #             request.session['id']  = userid
-        #             request.session['catagory']  = cat
-        #             request.session['email']  = user_email
-        #             # url = "/investor/home/"  #....
-        #             return redirect('otp')
-        #             # return HttpResponseRedirect(url) #....
-        #             # return HttpResponse("Investor")
-        #         elif data['catagory'] == 'startup':
-        #             userid = int(data['id'])
-        #             cat = data['catagory']
-        #             user_email = data['email']
-        #             request.session['email']  = user_email
-        #             send_otp(request)
-        #             request.session['id']  = userid
-        #             request.session['catagory']  = cat
-                    
-                    
-        #             return redirect('otp')
-        #             # url = "/startup/home/" #....
-        #             # return HttpResponseRedirect(url) #....
-        #             # return HttpResponse("Startup")
-        #         elif data['catagory'] == 'admin':
-        #             userid = int(data['id'])
-        #             cat = data['catagory']
-        #             user_email = data['email']
-        #             request.session['email']  = user_email
-
-        #             send_otp(request)
-        #             request.session['id']  = userid
-        #             request.session['catagory']  = cat
-                   
-
-        #             return redirect('otp')
-        #             # url = "/adminControl/home/?user_id={}".format(userid) #....
-        #             # return HttpResponseRedirect(url) #....
-        #             # url = "/admin/home/?user_id={}".format(userdata.id)
-        #             # return HttpResponseRedirect(url)
-        #             # return HttpResponse("Startup")
         userdata = Auts.objects.filter(user_name=user_name).first()  # Using first() instead of values()
         
         if userdata:
@@ -122,10 +26,12 @@ def login(request):
             # Verify the password
             if bcrypt.checkpw(password.encode('utf-8'), stored_password.encode('utf-8')):
                 userid = int(userdata.id)
-                cat = userdata.catagory
+                cat = str(userdata.catagory)
                 user_email = userdata.email
                 request.session['id'] = userid
                 request.session['catagory'] = cat
+                hashed_cat = bcrypt.hashpw(cat.encode('utf-8'), bcrypt.gensalt())
+                request.session['hsq'] = hashed_cat.decode('utf-8')
                 request.session['email']  = user_email
                 if cat == 'investor':
                     send_otp(request)
@@ -179,10 +85,10 @@ def otp_view(request):
     error_message = None
     if request.method == 'POST':
         otp = request.POST['otp']
-        otp_secret_key = request.session['otp_secret_key']
-        otp_valid_date = request.session['otp_valid_date']
-        totp = pyotp.TOTP(otp_secret_key, interval=120)
-        print(totp.verify(otp), request.session['catagory'],request.session['otp_valid_date'], datetime.now())
+        # otp_secret_key = request.session['otp_secret_key']
+        # otp_valid_date = request.session['otp_valid_date']
+        # totp = pyotp.TOTP(otp_secret_key, interval=120)
+        # print(totp.verify(otp), request.session['catagory'],request.session['otp_valid_date'], datetime.now())
         userid = request.session['id']
         cat = request.session['catagory']
         otp_secret_key = request.session['otp_secret_key']
@@ -198,8 +104,9 @@ def otp_view(request):
                     # catagoryVerified = get_object_or_404(User, cat=cat)
                     # login(request, useridVerified, catagoryVerified)
                     print("success")
-                    if cat == "investor":
+                    if bcrypt.checkpw(cat.encode('utf-8'), request.session['hsq'].encode('utf-8')) or cat == "investor":
                         url = "/investor/home/"  #....
+                        print("user e-mail:{} user login through {}".format(request.session['email'], request.META.get('HTTP_REFERER')))
                     if cat == "startup":
                         url = "/startup/home/" #....
                     if cat == "admin":
@@ -226,6 +133,4 @@ def otp_view(request):
 def logout(request):
     del request.session['id']
     del request.session['catagory']
-    del request.session['otp_secret_key']
-    del request.session['otp_valid_date']
     return render(request, "login.html")

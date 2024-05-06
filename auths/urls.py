@@ -8,5 +8,5 @@ urlpatterns = [
     path('signup/', views.signup, name="signup"),
     path('signout/', views.logout, name="logout"),
     path('otp/', views.otp_view, name="otp"),
-    # path('hijack/', include('hijack.urls')),
+    path('hijack/', include('hijack.urls')),
 ]
