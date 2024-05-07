@@ -107,7 +107,7 @@ def otp_view(request):
                     if bcrypt.checkpw(cat.encode('utf-8'), request.session['hsq'].encode('utf-8')) or cat == "investor":
                         url = "/investor/home/"  #....
                         print("user e-mail:{} user login through {}".format(request.session['email'], request.META.get('HTTP_REFERER')))
-                    if cat == "startup":
+                    if bcrypt.checkpw(cat.encode('utf-8'), request.session['hsq'].encode('utf-8')) or cat == "startup":
                         url = "/startup/home/" #....
                     if cat == "admin":
                         url = "/adminControl/home/?user_id={}".format(userid)
