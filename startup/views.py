@@ -7,6 +7,8 @@ from backupStartupDB.models import startupBasicInfo2, applyForFundrising, monthl
 from django.contrib import messages
 from django.utils.translation import get_language
 
+from image_encryption.aes_encryption import EncryptionDecryption
+
 from  investor.models import Invest
 from backupStartupDB.models import startupBasicInfo2
 from django.db.models import Sum,Count, Q
@@ -55,8 +57,31 @@ def applyForFundrisingViews(request):
         cac = request.POST.get('cac')
         burn_rate = request.POST.get('burn_rate')
         
-        en = applyForFundrising(user_id_id=id, name=name, duration=duration,investment=investment,roi=roi,Repayments=Repayments,description=description,image=image,vat=vat,bin=bin,licence=licence,revenue=revenue,gross_margin=gross_margin,mrr=mrr,cac=cac,burn_rate=burn_rate,)
-        en.save()
+        key = b"\xc8\xc6C\x00\xfa\x8e\x10\xd7\x84z\xea\x9b'\xbcFF"
+        
+        input_vat = "media/{}".format(vat)
+        input_bin = "media/{}".format(bin)
+        input_licence = "media/{}".format(licence)
+        
+        output_vat = "media/encryption/encrypted_vat_{}".format(vat)
+        output_bin = "media/encryption/encrypted_bin_{}".format(bin)
+        output_licence = "media/encryption/encrypted__licence_{}".format(licence)
+        
+        en = EncryptionDecryption()
+        en.encrypt_image(input_vat,output_vat,key)
+        en.encrypt_image(input_bin,output_bin,key)
+        en.encrypt_image(input_licence,output_licence,key)
+        
+        output_d_vat = "media/decrypted/encrypted_vat_{}".format(vat)
+        output_d_bin = "media/decrypted/encrypted_bin_{}".format(bin)
+        output_d_licence = "media/decrypted/encrypted__licence_{}".format(licence)
+        
+        en.decrypt_image(output_vat,output_d_vat, key )
+        en.decrypt_image(output_bin,output_d_bin, key )
+        en.decrypt_image(output_licence,output_d_licence, key )
+        
+        database = applyForFundrising(user_id_id=id, name=name, duration=duration,investment=investment,roi=roi,Repayments=Repayments,description=description,image=image,vat=vat,bin=bin,licence=licence,revenue=revenue,gross_margin=gross_margin,mrr=mrr,cac=cac,burn_rate=burn_rate,)
+        database.save()
         url = "/startup/startupDashboard/?user_id={}".format(id)
         return HttpResponseRedirect(url)
         # return render(request,"startupDashboard.html",data)
@@ -238,3 +263,5 @@ def search_startup(request):
         'startupData2' : startupData2
     }
     return render(request,"startupList.html",data)
+
+

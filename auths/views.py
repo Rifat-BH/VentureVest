@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth import authenticate,login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from auths.models import Auts
@@ -97,7 +97,7 @@ def otp_view(request):
         if otp_secret_key and otp_valid_date is not None:
             valid_until = datetime.fromisoformat(otp_valid_date)
             
-            if valid_until > datetime.now():
+            if valid_until > datetime.now() :
                 totp = pyotp.TOTP(otp_secret_key, interval=120)
                 if totp.verify(otp):
                     # useridVerified = get_object_or_404(User, userid=userid)
