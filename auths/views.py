@@ -99,7 +99,7 @@ def otp_view(request):
             
             if valid_until > datetime.now():
                 totp = pyotp.TOTP(otp_secret_key, interval=120)
-                if totp.verify(otp) or otp == otp:
+                if totp.verify(otp):
                     # useridVerified = get_object_or_404(User, userid=userid)
                     # catagoryVerified = get_object_or_404(User, cat=cat)
                     # login(request, useridVerified, catagoryVerified)
